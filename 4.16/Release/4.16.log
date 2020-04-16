@@ -1,0 +1,20 @@
+﻿  Clock.cpp
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Clock.cpp(30,10): warning C4244: 'argument': conversion from 'double' to 'DWORD', possible loss of data
+  Engine.cpp
+  Environment.cpp
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(57,17): warning C4150: deletion of pointer to incomplete type 'Window'; no destructor called
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.h(6): message : see declaration of 'Window'
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(62,14): warning C4150: deletion of pointer to incomplete type 'Log'; no destructor called
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.h(5): message : see declaration of 'Log'
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(67,16): warning C4150: deletion of pointer to incomplete type 'Clock'; no destructor called
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.h(4): message : see declaration of 'Clock'
+  FileReader.cpp
+  main.cpp
+  Timer.cpp
+  Window.cpp
+  gl3w.c
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 427 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  4.16.vcxproj -> D:\Documents\Visual Studio 2019\Projects\4.16\Release\4.16.exe
