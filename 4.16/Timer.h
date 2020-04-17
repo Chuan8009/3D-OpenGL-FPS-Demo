@@ -7,11 +7,13 @@ public:
 	Timer(double time);
 	Timer(const Timer& rhs);
 
+	// time interval
 	void set(double time);
 	void pause();
 	void reset();
 	void offset(double time);
 
+	// returns true once _time has passed and restarts
 	bool update();
 
 	const bool get_pause();

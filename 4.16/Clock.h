@@ -11,11 +11,14 @@ class Clock {
 public:
 	Clock(int fps = load_cap(CLOCK_FILE) );
 
+	// updates _time 
+	// returns true once each interval
 	bool update(double interval = UPDATE_INTERVAL);
 	void reset();
 
+	// fps limit
 	void limit(bool limit);
-	void set_cap(int cap);
+	void set_limit(int limit);
 
 	const double get_time();
 	const double get_fms();
@@ -25,7 +28,7 @@ private:
 	static const int load_cap(const char* file_path = CLOCK_FILE);
 	void update_time();
 private:
-	int _cap;
+	int _limit;
 	double _frames;
 	double _fms, _ms, _time;
 	double _ticks, _previous_ticks, _update_ticks;

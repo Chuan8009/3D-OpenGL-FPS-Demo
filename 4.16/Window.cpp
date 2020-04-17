@@ -5,6 +5,8 @@
 #include "Environment.h"
 #include "Clock.h"
 
+#include "Camera.h"
+
 #include "Timer.h"
 
 #define FILE_WINDOW_WIDTH "i_width"
@@ -22,6 +24,13 @@ Window::Window(const Settings settings) :
 	gl3wInit();
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
+
+	_camera = new Camera(settings.width, settings.height, 90.0f, 1.0f, 0.1f, 100.0f, 3.14f, 0.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+}
+
+Window::~Window() {
+	delete _camera;
 }
 
 void Window::update() {
@@ -30,10 +39,16 @@ void Window::update() {
 	if (update_title_timer.update()) {
 		glfwSetWindowTitle(_window, std::to_string(Environment::get().get_clock()->get_fms()).c_str());
 	}
+
+	_camera->update();
 }
 
 GLFWwindow* Window::get_glfw_window() {
 	return _window;
+}
+
+Camera* Window::get_camera() {
+	return _camera;
 }
 
 const Window::Settings Window::load_settings(const char* file_path) {

@@ -1,9 +1,4 @@
 ﻿  Engine.cpp
-  Environment.cpp
-D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(65,14): warning C4150: deletion of pointer to incomplete type 'Log'; no destructor called
-D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.h(5): message : see declaration of 'Log'
-  Timer.cpp
-  Window.cpp
-  main.cpp
-  Generating Code...
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Engine.cpp(61,60): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Engine.cpp(61,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   4.16.vcxproj -> D:\Documents\Visual Studio 2019\Projects\4.16\Debug\4.16.exe

@@ -10,9 +10,9 @@
 #define DEFAULT_FPS_LIMIT 60
 
 Clock::Clock(int fps) :
-	_cap			( fps ),
-	_ms				( 1000.0 / _cap ),
-	_is_limit		( _cap > 0 ? true : false ),
+	_limit			( fps ),
+	_ms				( 1000.0 / _limit ),
+	_is_limit		( _limit > 0 ? true : false ),
 	_frames			( 0.0 ),
 	_time			( 0.0 ),
 	_update_ticks	( 0 ),
@@ -52,9 +52,9 @@ void Clock::limit(bool limit) {
 	_is_limit = limit;
 }
 
-void Clock::set_cap(int cap) {
-	_cap = cap;
-	_ms = 1000.0 / _cap;
+void Clock::set_limit(int limit) {
+	_limit = limit;
+	_ms = 1000.0 / _limit;
 }
 
 void Clock::update_time() {
