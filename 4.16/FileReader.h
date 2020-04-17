@@ -24,12 +24,12 @@
 class FileReader {
 public:
 	struct Key_Value {
-		int key_val;
-		std::string value;
+		int key_val = 0;
+		std::string value = "";
 	};
 
 	struct Key_Table {
-		int key_val;
+		int key_val = 0;
 		std::vector<Key_Value> table;
 		bool empty = true;
 	};
@@ -38,34 +38,37 @@ public:
 
 	// s_read : reads from a defined section - default is no section
 	// returns false if no key exists
-	const bool s_read_string(std::string* val, const std::string& key, const std::string& section = "");
-	const bool s_read_int   (int *val, const std::string& key, const std::string& section = "");
-	const bool s_read_uint  (unsigned int *val, const std::string& key, const std::string& section = "");
-	const bool s_read_float (float *val, const std::string& key, const std::string& section = "");
-	const bool s_read_double(double *val, const std::string& key, const std::string& section = "");
+	bool s_read_string(std::string* val, const std::string& key, const std::string& section = "");
+	bool s_read_int   (int *val, const std::string& key, const std::string& section = "");
+	bool s_read_uint  (unsigned int *val, const std::string& key, const std::string& section = "");
+	bool s_read_float (float *val, const std::string& key, const std::string& section = "");
+	bool s_read_double(double *val, const std::string& key, const std::string& section = "");
 
 	// read : reads from current section using set_section - default is no section
 	// returns false if no key exists
-	const bool read_string(std::string* val, const std::string& key);
-	const bool read_int(int* val, const std::string& key);
-	const bool read_uint(unsigned int* val, const std::string& key);
-	const bool read_float(float* val, const std::string& key);
-	const bool read_double(double* val, const std::string& key);
+	bool read_string(std::string* val, const std::string& key);
+	bool read_int(int* val, const std::string& key);
+	bool read_uint(unsigned int* val, const std::string& key);
+	bool read_float(float* val, const std::string& key);
+	bool read_double(double* val, const std::string& key);
 
 	// set section to read from using read_string, read_int ...
 	void set_section(const std::string& section);
 
-	const size_t get_num_lines();
+	size_t get_num_lines();
 private:
 	std::vector<Key_Table> _data;
+	std::vector<size_t> _query;
 	size_t _num_lines;
-
 	int _section_hash_val;
+	bool _read;
 
-	const int _get_section_hash_val(const int& section_val);
-	const int _new_section_hash_val(const int& section_val);
-	const int _get_key_hash_val(const int& key_val, const int& section_hash_val = 0);
-	const int _new_key_hash_val(const int& key_val, const int& section_hash_val = 0);
+	int _get_section_hash_val(const int& section_val);
+	int _new_section_hash_val(const int& section_val);
+	int _get_key_hash_val(const int& key_val, const int& section_hash_val = 0);
+	int _new_key_hash_val(const int& key_val, const int& section_hash_val = 0);
+
+	void _query_file(std::fstream& file);
 };
 
 #endif

@@ -4,6 +4,8 @@
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
+#include <string>
+
 struct Program {
 	unsigned short type;
 	const char* file_path;

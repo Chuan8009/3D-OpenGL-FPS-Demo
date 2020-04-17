@@ -8,7 +8,14 @@
 
 #include <iostream>
 
-void load_material_textures(std::vector<Texture>& textures, aiMaterial* material, aiTextureType type, std::string type_name, std::string directory) {
+#include "FileReader.h"
+#include "Program.h"
+
+#define FILE_MODEL_SECTION "Model"
+#define FILE_MODEL_DIR "dir"
+#define FILE_MODEL_FILE "file"
+
+void load_material_textures(std::vector<Texture>& textures, aiMaterial* material, const aiTextureType type, const std::string type_name, const std::string directory) {
 	for (unsigned int i = 0; i < material->GetTextureCount(type); ++i) {
 		aiString string;
 		material->GetTexture(type, i, &string);
@@ -28,7 +35,7 @@ void load_material_textures(std::vector<Texture>& textures, aiMaterial* material
 	}
 }
 
-bool load_assimp(std::string directory, std::string path, std::vector<Mesh>& meshes) {
+bool load_assimp(const std::string directory, std::string path, std::vector<Mesh>& meshes) {
 	Assimp::Importer importer;
 	path = directory + path;
 
@@ -82,4 +89,19 @@ bool load_assimp(std::string directory, std::string path, std::vector<Mesh>& mes
 	}
 
 	return true;
+}
+
+bool load_model_file(const char* file_path, std::vector<Mesh>& meshes) {
+	FileReader file(file_path);
+
+	std::string model_file = "";
+	std::string directory = "";
+	
+
+	file.set_section(FILE_MODEL_SECTION);
+	file.read_string(&model_file, FILE_MODEL_FILE);
+	file.read_string(&directory, FILE_MODEL_DIR);
+
+
+	return (model_file.size() == 0) ? false : load_assimp(directory, model_file, meshes);
 }

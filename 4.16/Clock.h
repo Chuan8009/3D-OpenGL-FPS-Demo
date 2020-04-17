@@ -9,30 +9,31 @@
 
 class Clock {
 public:
-	Clock(int fps = load_cap(CLOCK_FILE) );
+	Clock(const int fps = load_cap(CLOCK_FILE));
 
 	// updates _time 
 	// returns true once each interval
-	bool update(double interval = UPDATE_INTERVAL);
+	bool update(const double interval = UPDATE_INTERVAL);
 	void reset();
 
 	// fps limit
-	void limit(bool limit);
-	void set_limit(int limit);
+	void limit(const bool limit);
+	void set_limit(const int limit);
 
-	const double get_time();
-	const double get_fms();
+	double get_time();
+	double get_fms();
 
-	const std::string get_display_time();
-private:
-	static const int load_cap(const char* file_path = CLOCK_FILE);
-	void update_time();
+	std::string get_display_time();
+
+	static int load_cap(const char* file_path = CLOCK_FILE);
 private:
 	int _limit;
 	double _frames;
 	double _fms, _ms, _time;
 	double _ticks, _previous_ticks, _update_ticks;
 	bool _is_limit;
+
+	void update_time();
 };
 
 #endif

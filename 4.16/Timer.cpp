@@ -9,7 +9,7 @@ Timer::Timer() :
 	_is_paused	( true )
 {}
 
-Timer::Timer(double time) :
+Timer::Timer(const double time) :
 	_time		( time ),
 	_clock		( 0 ),
 	_prev_time	( glfwGetTime() ),
@@ -24,7 +24,7 @@ Timer::Timer(const Timer& rhs) :
 	_is_paused	( rhs._is_paused )
 {}
 
-void Timer::set(double time) {
+void Timer::set(const double time) {
 	_time = time;
 	_is_paused = false;
 }
@@ -43,7 +43,7 @@ void Timer::reset() {
 	_prev_time = glfwGetTime();
 }
 
-void Timer::offset(double time) {
+void Timer::offset(const double time) {
 	_prev_time -= time;
 }
 
@@ -55,15 +55,15 @@ bool Timer::update() {
 	return false;
 }
 
-const bool Timer::get_pause() {
+bool Timer::get_pause() {
 	return _is_paused;
 }
 
-const double Timer::get_time() {
+double Timer::get_time() {
 	return _time;
 }
 
-const double Timer::get_clock() {
+double Timer::get_clock() {
 	if (!_is_paused) {
 		_clock = glfwGetTime() - _prev_time;
 	}

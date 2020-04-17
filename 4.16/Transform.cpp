@@ -1,7 +1,7 @@
 #include "Transform.h"
 
 Transform::Transform(
-	glm::vec3 position, glm::vec3 scale, glm::vec3 rotation) :
+	const glm::vec3 position, const glm::vec3 scale, const glm::vec3 rotation) :
 	_position		( position ),
 	_scale			( scale ),
 	_rotation		( rotation )
@@ -20,21 +20,21 @@ void Transform::setup_matrices() {
 	_model = _position_matrix * _rotation_matrix * _scale_matrix;
 }
 
-void Transform::set_position(glm::vec3 posiiton) {
+void Transform::set_position(const glm::vec3 posiiton) {
 	_position = posiiton;
 	_position_matrix = glm::translate(glm::mat4(1.0f), _position);
 
 	_model = _position_matrix * _rotation_matrix * _scale_matrix;
 }
 
-void Transform::set_scale(glm::vec3 scale) {
+void Transform::set_scale(const glm::vec3 scale) {
 	_scale = scale;
 	_scale_matrix = glm::scale(glm::mat4(1.0f), _scale);
 
 	_model = _position_matrix * _rotation_matrix * _scale_matrix;
 }
 
-void Transform::set_rotation(glm::vec3 rotation) {
+void Transform::set_rotation(const glm::vec3 rotation) {
 	_rotation = rotation;
 	_rotation_matrix_x = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1, 0, 0));
 	_rotation_matrix_y = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0, 1, 0));

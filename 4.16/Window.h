@@ -8,6 +8,8 @@
 
 #define WINDOW_FILE "Data/system.txt"
 
+constexpr GLfloat WINDOW_BACKGROUND_COLOR[4] = { 0.0, 0.0, 0.0, 1.0 };
+
 class Camera;
 
 class Window {
@@ -23,14 +25,13 @@ public:
 
 	void update();
 
-	static constexpr GLfloat color[4] = { 0.0, 0.0, 0.0, 1.0 };
 	GLFWwindow* get_glfw_window();
 	Camera* get_camera();
+
+	static Settings load_settings(const char* file_path = WINDOW_FILE);
 private:
 	GLFWwindow* _window;
 	Camera* _camera;
-
-	static const Settings load_settings(const char* file_path = WINDOW_FILE);
 };
 
 #endif

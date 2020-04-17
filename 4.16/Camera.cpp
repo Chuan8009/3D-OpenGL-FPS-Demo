@@ -3,19 +3,19 @@
 #include "Environment.h"
 #include "Clock.h"
 
-constexpr float speed = 10000.0f;
-constexpr float half_pie = 3.14f / 2.0f;
+constexpr float SPEED = 10000.0f;
+constexpr float HALF_PIE = 3.14f / 2.0f;
 
 Camera::Camera(
-	int   window_w,
-	int   window_h,
-	float fov,
-	float aspect,
-	float z_near,
-	float z_far,
-	float horizontal_angle,
-	float vertical_angle,
-	glm::vec3 position
+	const int   window_w,
+	const int   window_h,
+	const float fov,
+	const float aspect,
+	const float z_near,
+	const float z_far,
+	const float horizontal_angle,
+	const float vertical_angle,
+	const glm::vec3 position
 ) :
 	_window_w			( window_w ),
 	_window_h			( window_h ),
@@ -44,35 +44,35 @@ void Camera::detach_shader(GLuint program) {
 	}
 }
 
-void Camera::move(int direction) {
+void Camera::move(const int direction) {
 	if (direction == CAMERA_FORWARD) {
-		_position += _direction * speed * (float)Environment::get().get_clock()->get_time();
+		_position += _direction * SPEED * (float)Environment::get().get_clock()->get_time();
 	}
 
 	if (direction == CAMERA_BACKWARD) {
-		_position -= _direction * speed * (float)Environment::get().get_clock()->get_time();
+		_position -= _direction * SPEED * (float)Environment::get().get_clock()->get_time();
 	}
 
 	if (direction == CAMERA_LEFT) {
-		_position.x -= _right.x * (float)Environment::get().get_clock()->get_time() * speed;
-		_position.z -= _right.z * (float)Environment::get().get_clock()->get_time() * speed;
+		_position.x -= _right.x * (float)Environment::get().get_clock()->get_time() * SPEED;
+		_position.z -= _right.z * (float)Environment::get().get_clock()->get_time() * SPEED;
 	}
 
 	if (direction == CAMERA_RIGHT) {
-		_position.x += _right.x * (float)Environment::get().get_clock()->get_time() * speed;
-		_position.z += _right.z * (float)Environment::get().get_clock()->get_time() * speed;
+		_position.x += _right.x * (float)Environment::get().get_clock()->get_time() * SPEED;
+		_position.z += _right.z * (float)Environment::get().get_clock()->get_time() * SPEED;
 	}
 
 	if (direction == CAMERA_UP) {
-		_position.y += (float)Environment::get().get_clock()->get_time() * speed;
+		_position.y += (float)Environment::get().get_clock()->get_time() * SPEED;
 	}
 
 	if (direction == CAMERA_DOWN) {
-		_position.y -= (float)Environment::get().get_clock()->get_time() * speed;
+		_position.y -= (float)Environment::get().get_clock()->get_time() * SPEED;
 	}
 }
 
-void Camera::move_angle(float xpos, float ypos) {
+void Camera::move_angle(const float xpos, const float ypos) {
 	_horizontal_angle += 0.001f * ((_window_w / 2) - xpos);
 	_vertical_angle += 0.001f * ((_window_h / 2) - ypos);
 }
@@ -85,9 +85,9 @@ void Camera::update() {
 		);
 
 	_right = glm::vec3(
-		sin(_horizontal_angle - half_pie),
+		sin(_horizontal_angle - HALF_PIE),
 		0,
-		cos(_horizontal_angle - half_pie)
+		cos(_horizontal_angle - HALF_PIE)
 		);
 
 	_up = glm::cross(_right, _direction);

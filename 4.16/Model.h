@@ -5,10 +5,10 @@
 
 class Model {
 public:
-	Model(GLuint program, std::string directory, std::string model_file);
-	Model(const char* file);
+	Model(const GLuint program, const std::string directory, const std::string model_file);
+	Model(const GLuint program, const char *file_path);
 
-	void draw();
+	void draw() const;
 
 	std::vector<Mesh> meshes;
 private:

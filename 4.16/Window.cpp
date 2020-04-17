@@ -51,7 +51,7 @@ Camera* Window::get_camera() {
 	return _camera;
 }
 
-const Window::Settings Window::load_settings(const char* file_path) {
+Window::Settings Window::load_settings(const char* file_path) {
 	FileReader file(file_path);
 	Window::Settings settings;
 

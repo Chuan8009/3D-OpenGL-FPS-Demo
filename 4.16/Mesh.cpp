@@ -5,19 +5,19 @@ Mesh::Mesh() {
 }
 
 Mesh::Mesh(
-	std::vector<Texture>& textures,
-	std::vector<glm::vec3>& vertices,
-	std::vector<glm::vec2>& uvs,
-	std::vector<glm::vec3>& normals,
-	std::vector<unsigned short>& indices,
-	Transform& transform
+	const std::vector<Texture>& textures,
+	const std::vector<glm::vec3>& vertices,
+	const std::vector<glm::vec2>& uvs,
+	const std::vector<glm::vec3>& normals,
+	const std::vector<unsigned short>& indices,
+	const Transform& transform
 ) :
-	textures(textures),
-	vertices(vertices),
-	uvs(uvs),
-	normals(normals),
-	indices(indices),
-	transform(transform)
+	textures		( textures  ),
+	vertices		( vertices  ),
+	uvs				( uvs       ),
+	normals			( normals   ),
+	indices			( indices   ),
+	transform		( transform )
 {
 	load_buffers();
 }
@@ -50,7 +50,7 @@ void Mesh::load_buffers() {
 	}
 }
 
-void Mesh::draw(GLuint program) {
+void Mesh::draw(const GLuint program) {
 	glBindVertexArray(_vao);
 	glUseProgram(program);
 

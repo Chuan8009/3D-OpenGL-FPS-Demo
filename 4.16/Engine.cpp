@@ -17,7 +17,7 @@ Engine::Engine() :
 	_environment.set_window(window);
 
 	_program_id = load_shaders(_program);
-	_model = new Model(_program_id, "Data\\Models\\", "link.obj");
+	_model = new Model(_program_id, "Data\\Models\\fw.txt");
 }
 
 Engine::~Engine() {
@@ -27,13 +27,7 @@ Engine::~Engine() {
 
 
 void Engine::run() {
-
 	_environment.get_window()->get_camera()->attach_shader(_program_id);
-
-	Transform transform(glm::vec3(5.0f, 2.0f, -5.0f), glm::vec3(0.1f, 0.1f, 0.1f));
-	for(auto mesh : _model->meshes) {
-		mesh.transform = transform;
-	}
 
 	while (!_exit) {
 		_environment.get_clock()->update();
@@ -58,7 +52,7 @@ void Engine::input() {
 
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
-	_environment.get_window()->get_camera()->move_angle(xpos, ypos);
+	_environment.get_window()->get_camera()->move_angle((float)xpos, (float)ypos);
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 	glfwSetCursorPos(window, width / 2, height / 2);
@@ -79,18 +73,18 @@ void Engine::input() {
 		_environment.get_window()->get_camera()->move(CAMERA_RIGHT);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_Q)) {
+	if (glfwGetKey(window, GLFW_KEY_E)) {
 		_environment.get_window()->get_camera()->move(CAMERA_UP);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_E)) {
+	if (glfwGetKey(window, GLFW_KEY_Q)) {
 		_environment.get_window()->get_camera()->move(CAMERA_DOWN);
 	}
 }
 
 void Engine::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearBufferfv(GL_COLOR, 0, _environment.get_window()->color);
+	glClearBufferfv(GL_COLOR, 0, WINDOW_BACKGROUND_COLOR);
 
 	_model->draw();
 

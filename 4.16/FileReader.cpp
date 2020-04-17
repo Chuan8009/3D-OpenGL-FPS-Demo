@@ -16,44 +16,21 @@ size_t str_val(const std::string& str) {
 	return val;
 }
 
-// read num of sections and lines in each section
-// sections[a] = b ; a = section, b = num of lines
-const std::vector<size_t> query_file(std::fstream& file) {
-	std::vector<size_t> sections{ 0 };
-
-	char header;
-	size_t section = 0;
-	while (!file.eof()) {
-		do {
-			file.get(header);
-		} while (header == '\n');
-
-		file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		if (header == SECTION_CHAR) {
-			sections.push_back(0);
-			++section;
-		}
-		else if (header != COMMENT_CHAR) {
-			++sections[section];
-		}
-	}
-
-	file.clear();
-	file.seekg(0, std::ios::beg);
-
-	return sections;
-}
-
 FileReader::FileReader(const char* file_path) :
-	_num_lines(0)
+	_num_lines			( 0 ),
+	_query				( {0} ),
+	_section_hash_val	( 0 ),
+	_read				( true )
 {
 	std::fstream file(file_path, std::ios::in);
 	if (!file.is_open()) {
+		std::cout << "FileReader Error: no file at  -- " << file_path << std::endl;
+		_read = false;
 		return;
 	}
 
-	const std::vector<size_t> query = query_file(file);
-	_data.resize(query.size());
+	_query_file(file);
+	_data.resize(_query.size());
 
 	std::string key, val;
 	size_t section = 0;
@@ -61,7 +38,7 @@ FileReader::FileReader(const char* file_path) :
 	// Default Table -- No Section Comment
 	_section_hash_val = _new_section_hash_val(str_val(""));
 	_data[_section_hash_val].key_val = str_val("");
-	_data[_section_hash_val].table.resize(query[section]);
+	_data[_section_hash_val].table.resize(_query[section]);
 	_data[_section_hash_val].empty = false;
 
 	while (std::getline(file, key, ' ')) {
@@ -78,7 +55,7 @@ FileReader::FileReader(const char* file_path) :
 			}
 			++section;
 			_data[hash_val].key_val = key_val;
-			_data[hash_val].table.resize(query[section]);
+			_data[hash_val].table.resize(_query[section]);
 			_data[hash_val].empty = false;
 			_section_hash_val = hash_val;
 		}
@@ -95,7 +72,11 @@ FileReader::FileReader(const char* file_path) :
 
 }
 
-const bool FileReader::s_read_string(std::string* val, const std::string& key, const std::string& section) {
+bool FileReader::s_read_string(std::string* val, const std::string& key, const std::string& section) {
+	if (!_read) {
+		return false;
+	}
+
 	const int section_hash_val = _get_section_hash_val(str_val(section));
 	if (section_hash_val < 0) {
 		return false;
@@ -109,7 +90,11 @@ const bool FileReader::s_read_string(std::string* val, const std::string& key, c
 	return true;
 }
 
-const bool FileReader::s_read_int(int* val, const std::string& key, const std::string& section) {
+bool FileReader::s_read_int(int* val, const std::string& key, const std::string& section) {
+	if (!_read) {
+		return false;
+	}
+
 	const int section_hash_val = _get_section_hash_val(str_val(section));
 	if (section_hash_val < 0) {
 		return false;
@@ -123,7 +108,11 @@ const bool FileReader::s_read_int(int* val, const std::string& key, const std::s
 	return true;
 }
 
-const bool FileReader::s_read_uint(unsigned int* val, const std::string& key, const std::string& section) {
+bool FileReader::s_read_uint(unsigned int* val, const std::string& key, const std::string& section) {
+	if (!_read) {
+		return false;
+	}
+
 	const int section_hash_val = _get_section_hash_val(str_val(section));
 	if (section_hash_val < 0) {
 		return false;
@@ -137,7 +126,11 @@ const bool FileReader::s_read_uint(unsigned int* val, const std::string& key, co
 	return true;
 }
 
-const bool FileReader::s_read_float(float* val, const std::string& key, const std::string& section) {
+bool FileReader::s_read_float(float* val, const std::string& key, const std::string& section) {
+	if (!_read) {
+		return false;
+	}
+
 	const int section_hash_val = _get_section_hash_val(str_val(section));
 	if (section_hash_val < 0) {
 		return false;
@@ -151,7 +144,11 @@ const bool FileReader::s_read_float(float* val, const std::string& key, const st
 	return true;
 }
 
-const bool FileReader::s_read_double(double* val, const std::string& key, const std::string& section) {
+bool FileReader::s_read_double(double* val, const std::string& key, const std::string& section) {
+	if (!_read) {
+		return false;
+
+	}
 	const int section_hash_val = _get_section_hash_val(str_val(section));
 	if (section_hash_val < 0) {
 		return false;
@@ -165,7 +162,11 @@ const bool FileReader::s_read_double(double* val, const std::string& key, const 
 	return true;
 }
 
-const bool FileReader::read_string(std::string* val, const std::string& key) {
+bool FileReader::read_string(std::string* val, const std::string& key) {
+	if (!_read) {
+		return false;
+	}
+
 	const int key_hash_val = _get_key_hash_val(str_val(key), _section_hash_val);
 	if (key_hash_val < 0) {
 		return false;
@@ -175,7 +176,11 @@ const bool FileReader::read_string(std::string* val, const std::string& key) {
 	return true;
 }
 
-const bool FileReader::read_int(int* val, const std::string& key) {
+bool FileReader::read_int(int* val, const std::string& key) {
+	if (!_read) {
+		return false;
+	}
+
 	const int key_hash_val = _get_key_hash_val(str_val(key), _section_hash_val);
 	if (key_hash_val < 0) {
 		return false;
@@ -185,7 +190,11 @@ const bool FileReader::read_int(int* val, const std::string& key) {
 	return true;
 }
 
-const bool FileReader::read_uint(unsigned int* val, const std::string& key) {
+bool FileReader::read_uint(unsigned int* val, const std::string& key) {
+	if (!_read) {
+		return false;
+	}
+
 	const int key_hash_val = _get_key_hash_val(str_val(key), _section_hash_val);
 	if (key_hash_val < 0) {
 		return false;
@@ -195,7 +204,11 @@ const bool FileReader::read_uint(unsigned int* val, const std::string& key) {
 	return true;
 }
 
-const bool FileReader::read_float(float* val, const std::string& key) {
+bool FileReader::read_float(float* val, const std::string& key) {
+	if (!_read) {
+		return false;
+	}
+
 	const int key_hash_val = _get_key_hash_val(str_val(key), _section_hash_val);
 	if (key_hash_val < 0) {
 		return false;
@@ -205,7 +218,11 @@ const bool FileReader::read_float(float* val, const std::string& key) {
 	return true;
 }
 
-const bool FileReader::read_double(double* val, const std::string& key) {
+bool FileReader::read_double(double* val, const std::string& key) {
+	if (!_read) {
+		return false;
+	}
+
 	const int key_hash_val = _get_key_hash_val(str_val(key), _section_hash_val);
 	if (key_hash_val < 0) {
 		return false;
@@ -217,13 +234,17 @@ const bool FileReader::read_double(double* val, const std::string& key) {
 
 
 void FileReader::set_section(const std::string& section) {
+	if (!_read) {
+		return;
+	}
+
 	_section_hash_val = _get_section_hash_val(str_val(section));
 	if (_section_hash_val == -1) {
 		throw std::out_of_range("Invalid Section");
 	}
 }
 
-const int FileReader::_get_section_hash_val(const int& section_val) {
+int FileReader::_get_section_hash_val(const int& section_val) {
 	int hash_val = section_val % _data.capacity();
 	const int start_val = hash_val;
 
@@ -238,11 +259,11 @@ const int FileReader::_get_section_hash_val(const int& section_val) {
 	return hash_val;
 }
 
-const size_t FileReader::get_num_lines() {
+size_t FileReader::get_num_lines() {
 	return _num_lines;
 }
 
-const int FileReader::_new_section_hash_val(const int& section_val) {
+int FileReader::_new_section_hash_val(const int& section_val) {
 	int hash_val = section_val % _data.capacity();
 	const int start_val = hash_val;
 
@@ -257,7 +278,7 @@ const int FileReader::_new_section_hash_val(const int& section_val) {
 	return hash_val;
 }
 
-const int FileReader::_get_key_hash_val(const int& key_val, const int& section_hash_val) {
+int FileReader::_get_key_hash_val(const int& key_val, const int& section_hash_val) {
 	if (_data[section_hash_val].empty) {
 		return -1;
 	}
@@ -276,7 +297,7 @@ const int FileReader::_get_key_hash_val(const int& key_val, const int& section_h
 	return hash_val;
 }
 
-const int FileReader::_new_key_hash_val(const int& key_val, const int& section_hash_val) {
+int FileReader::_new_key_hash_val(const int& key_val, const int& section_hash_val) {
 	if (_data[section_hash_val].empty) {
 		return -1;
 	}
@@ -293,4 +314,28 @@ const int FileReader::_new_key_hash_val(const int& key_val, const int& section_h
 	}
 
 	return hash_val;
+}
+
+// read num of sections and lines in each section
+// sections[a] = b ; a = section, b = num of lines
+void FileReader::_query_file(std::fstream& file) {
+	char header;
+	size_t section = 0;
+	while (!file.eof()) {
+		do {
+			file.get(header);
+		} while (header == '\n');
+
+		file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		if (header == SECTION_CHAR) {
+			_query.push_back(0);
+			++section;
+		}
+		else if (header != COMMENT_CHAR) {
+			++_query[section];
+		}
+	}
+
+	file.clear();
+	file.seekg(0, std::ios::beg);
 }

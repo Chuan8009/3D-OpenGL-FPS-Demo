@@ -12,16 +12,16 @@ class Mesh {
 public:
 	Mesh();
 	Mesh(
-		std::vector<Texture>& textures,
-		std::vector<glm::vec3>& vertices,
-		std::vector<glm::vec2>& uvs,
-		std::vector<glm::vec3>& normals,
-		std::vector<unsigned short>& indices,
-		Transform& transform
+		const std::vector<Texture>& textures,
+		const std::vector<glm::vec3>& vertices,
+		const std::vector<glm::vec2>& uvs,
+		const std::vector<glm::vec3>& normals,
+		const std::vector<unsigned short>& indices,
+		const Transform& transform
 	);
 
 	void load_buffers();
-	void draw(GLuint program);
+	void draw(const GLuint program);
 public:
 	std::vector<Texture>        textures;
 	std::vector<glm::vec3>      vertices;

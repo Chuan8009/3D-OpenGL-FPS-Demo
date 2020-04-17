@@ -16,14 +16,24 @@
 
 class Camera {
 public:
-	Camera(int window_w, int window_h, float fov, float aspect, float z_near, float z_far, float horizontal_angle, float vertical_angle, glm::vec3 position);
+	Camera(
+		const int window_w,
+		const int window_h,
+		const float fov,
+		const float aspect,
+		const float z_near,
+		const float z_far,
+		const float horizontal_angle,
+		const float vertical_angle,
+		const glm::vec3 position
+	);
 
-	void move(int direction);
-	void move_angle(float xpos, float ypos);
+	void move(const int direction);
+	void move_angle(const float xpos, const float ypos);
 	void update();
 
-	void attach_shader(GLuint program);
-	void detach_shader(GLuint program);
+	void attach_shader(const GLuint program);
+	void detach_shader(const GLuint program);
 private:
 	int _window_w;
 	int _window_h;

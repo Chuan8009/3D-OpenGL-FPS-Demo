@@ -9,7 +9,7 @@
 
 #define DEFAULT_FPS_LIMIT 60
 
-Clock::Clock(int fps) :
+Clock::Clock(const int fps) :
 	_limit			( fps ),
 	_ms				( 1000.0 / _limit ),
 	_is_limit		( _limit > 0 ? true : false ),
@@ -17,17 +17,18 @@ Clock::Clock(int fps) :
 	_time			( 0.0 ),
 	_update_ticks	( 0 ),
 	_fms			( 0.0 ),
+	_ticks			( 0.0 ),
 	_previous_ticks ( glfwGetTime() )
 {}
 
-bool Clock::update(double interval) {
+bool Clock::update(const double interval) {
 	update_time();
 	_frames++;
 
 	if (_is_limit && (_time < _ms)) {
 		double delay = _ms - _time;
 		if (delay > 0.0) {
-			Sleep(delay);
+			Sleep(DWORD(delay));
 			update_time();
 		}
 	}
@@ -48,11 +49,11 @@ void Clock::reset() {
 	update_time();
 }
 
-void Clock::limit(bool limit) {
+void Clock::limit(const bool limit) {
 	_is_limit = limit;
 }
 
-void Clock::set_limit(int limit) {
+void Clock::set_limit(const int limit) {
 	_limit = limit;
 	_ms = 1000.0 / _limit;
 }
@@ -63,7 +64,7 @@ void Clock::update_time() {
 	_time = _ticks * .001;
 }
 
-const int Clock::load_cap(const char* file_path) {
+int Clock::load_cap(const char* file_path) {
 	FileReader file(file_path);
 
 	int fps = DEFAULT_FPS_LIMIT;
@@ -72,17 +73,17 @@ const int Clock::load_cap(const char* file_path) {
 	return fps;
 }
 
-const double Clock::get_time() {
+double Clock::get_time() {
 	return _time;
 }
 
-const double Clock::get_fms() {
+double Clock::get_fms() {
 	return _fms;
 }
 
 // Time format (00:00:00:000)
 // days : hours : minutes : seconds : miliseconds
-const std::string Clock::get_display_time() {
+std::string Clock::get_display_time() {
 	double miliseconds = glfwGetTime() * .001;
 	miliseconds = miliseconds - floor(miliseconds);
 	miliseconds *= 1000.0;
