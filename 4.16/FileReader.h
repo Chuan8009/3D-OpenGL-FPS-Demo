@@ -8,7 +8,7 @@
 /* Reads formatted data from a file
 ** example file:
 ** "file.txt"
-** # People
+** # Person
 ** str_name Greg
 ** i_number 100
 
@@ -34,28 +34,43 @@ public:
 		bool empty = true;
 	};
 
-	FileReader(const char* file_path);
+	typedef std::vector<Key_Value>::iterator iterator;
+	typedef std::vector<Key_Value>::const_iterator const_iterator;
+
+	FileReader(const char* file_path, size_t (*hash_func)(const std::string& str) = &str_val);
 
 	// s_read : reads from a defined section - default is no section
 	// returns false if no key exists
-	bool s_read_string(std::string* val, const std::string& key, const std::string& section = "");
-	bool s_read_int   (int *val, const std::string& key, const std::string& section = "");
-	bool s_read_uint  (unsigned int *val, const std::string& key, const std::string& section = "");
-	bool s_read_float (float *val, const std::string& key, const std::string& section = "");
-	bool s_read_double(double *val, const std::string& key, const std::string& section = "");
+	bool s_read   (std::string* val, const std::string& key, const std::string& section = "");
+	bool s_read   (int *val, const std::string& key, const std::string& section = "");
+	bool s_read   (unsigned int *val, const std::string& key, const std::string& section = "");
+	bool s_read   (float *val, const std::string& key, const std::string& section = "");
+	bool s_read   (double *val, const std::string& key, const std::string& section = "");
 
 	// read : reads from current section using set_section - default is no section
 	// returns false if no key exists
-	bool read_string(std::string* val, const std::string& key);
-	bool read_int(int* val, const std::string& key);
-	bool read_uint(unsigned int* val, const std::string& key);
-	bool read_float(float* val, const std::string& key);
-	bool read_double(double* val, const std::string& key);
+	bool read     (std::string* val, const std::string& key);
+	bool read     (int* val, const std::string& key);
+	bool read     (unsigned int* val, const std::string& key);
+	bool read     (float* val, const std::string& key);
+	bool read     (double* val, const std::string& key);
+
+	bool read	  (std::string* val, const int& key);
+	bool read	  (int* val, const int& key);
+	bool read     (unsigned int* val, const int& key);
+	bool read	  (float* val, const int& key);
+	bool read     (double* val, const int& key);
 
 	// set section to read from using read_string, read_int ...
 	void set_section(const std::string& section);
 
-	size_t get_num_lines();
+	int get_num_lines(const std::string& section);
+
+	const_iterator begin();
+	const_iterator end();
+
+	static size_t str_val(const std::string& str);
+	static size_t int_val(const std::string& str);
 private:
 	std::vector<Key_Table> _data;
 	std::vector<size_t> _query;
@@ -69,6 +84,8 @@ private:
 	int _new_key_hash_val(const int& key_val, const int& section_hash_val = 0);
 
 	void _query_file(std::fstream& file);
+
+	size_t (*_hash_func)(const std::string& str);
 };
 
 #endif

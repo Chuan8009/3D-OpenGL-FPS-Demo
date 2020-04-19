@@ -11,9 +11,13 @@
 #include "FileReader.h"
 #include "Program.h"
 
+#include "Environment.h"
+#include "ResourceManager.h"
+
 #define FILE_MODEL_SECTION "Model"
 #define FILE_MODEL_DIR "dir"
 #define FILE_MODEL_FILE "file"
+#define FILE_MODEL_PROGRAM_ID "program_id"
 
 void load_material_textures(std::vector<Texture>& textures, aiMaterial* material, const aiTextureType type, const std::string type_name, const std::string directory) {
 	for (unsigned int i = 0; i < material->GetTextureCount(type); ++i) {
@@ -23,13 +27,13 @@ void load_material_textures(std::vector<Texture>& textures, aiMaterial* material
 		std::string path(string.C_Str());
 		size_t end = path.find_last_of('\\') + 1;
 		path.erase(0, end);
-		std::cout << "Texture Path: " << directory + path << std::endl;
+		std::cout << "Texture Path: " << directory + path << '\n';
 		texture.id = SOIL_load_OGL_texture((directory + path).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, 0);
 		if (texture.id == 0) {
-			std::cout << SOIL_last_result() << std::endl;
+			std::cout << SOIL_last_result() << '\n';
 		}
 
-		std::cout << "id: " << texture.id << std::endl;
+		std::cout << "id: " << texture.id << '\n';
 		texture.type = type_name;
 		textures.push_back(texture);
 	}
@@ -41,15 +45,15 @@ bool load_assimp(const std::string directory, std::string path, std::vector<Mesh
 
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices);
 	if (!scene) {
-		std::cout << "Assimp Loader -- Couldn't load scene at -- " << path << std::endl;
+		std::cout << "Assimp Loader -- Couldn't load scene at -- " << path << '\n';
 		std::cout << importer.GetErrorString();
 		return false;
 	}
 
 	const aiMesh* ai_mesh = scene->mMeshes[0];
-	std::cout << "Meshes: " << scene->mNumMeshes << std::endl;
-	std::cout << "Materials: " << scene->mNumMaterials << std::endl;
-	std::cout << "Textures: " << scene->mNumTextures << std::endl;
+	std::cout << "Meshes: " << scene->mNumMeshes << '\n';
+	std::cout << "Materials: " << scene->mNumMaterials << '\n';
+	std::cout << "Textures: " << scene->mNumTextures << '\n';
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
 		Mesh mesh;
@@ -79,7 +83,7 @@ bool load_assimp(const std::string directory, std::string path, std::vector<Mesh
 		if (ai_mesh->mMaterialIndex >= 0) {
 			aiMaterial* material = scene->mMaterials[ai_mesh->mMaterialIndex];
 
-			std::cout << "Texture Count: " << material->GetTextureCount(aiTextureType_DIFFUSE) << std::endl;
+			std::cout << "Texture Count: " << material->GetTextureCount(aiTextureType_DIFFUSE) << '\n';
 			load_material_textures(mesh.textures, material, aiTextureType_DIFFUSE, "diffuse", directory);
 			load_material_textures(mesh.textures, material, aiTextureType_SPECULAR, "specular", directory);
 
@@ -91,17 +95,25 @@ bool load_assimp(const std::string directory, std::string path, std::vector<Mesh
 	return true;
 }
 
-bool load_model_file(const char* file_path, std::vector<Mesh>& meshes) {
+bool load_model_file(const char* file_path, GLuint& program, std::vector<Mesh>& meshes) {
 	FileReader file(file_path);
+	bool loaded = false;
 
-	std::string model_file = "";
-	std::string directory = "";
-	
+	std::string model_file;
+	std::string directory;
+	size_t program_id;
 
 	file.set_section(FILE_MODEL_SECTION);
-	file.read_string(&model_file, FILE_MODEL_FILE);
-	file.read_string(&directory, FILE_MODEL_DIR);
+	file.read(&model_file, FILE_MODEL_FILE);
+	file.read(&directory, FILE_MODEL_DIR);
+	file.read(&program_id, FILE_MODEL_PROGRAM_ID);
 
+	loaded = load_assimp(directory, model_file, meshes);
 
-	return (model_file.size() == 0) ? false : load_assimp(directory, model_file, meshes);
+	program = Environment::get().get_resource_manager()->get_program(program_id);
+	if(program == 0) {
+		std::cout << "Warning: Shader Error -- index: " << program_id << " doesn't exist" << '\n';
+	}
+
+	return loaded;
 }

@@ -1,3 +1,6 @@
 ﻿  Engine.cpp
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Model.cpp
+  ModelLoader.cpp
+  ResourceManager.cpp
+  Generating Code...
   4.16.vcxproj -> D:\Documents\Visual Studio 2019\Projects\4.16\Debug\4.16.exe

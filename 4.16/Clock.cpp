@@ -9,6 +9,15 @@
 
 #define DEFAULT_FPS_LIMIT 60
 
+int clock_load_cap(const char* file_path) {
+	FileReader file(file_path);
+
+	int fps = DEFAULT_FPS_LIMIT;
+	file.s_read(&fps, FILE_CLOCK_FPS, "System");
+
+	return fps;
+}
+
 Clock::Clock(const int fps) :
 	_limit			( fps ),
 	_ms				( 1000.0 / _limit ),
@@ -62,15 +71,6 @@ void Clock::update_time() {
 	_ticks = glfwGetTime() - _previous_ticks;
 	_previous_ticks = glfwGetTime();
 	_time = _ticks * .001;
-}
-
-int Clock::load_cap(const char* file_path) {
-	FileReader file(file_path);
-
-	int fps = DEFAULT_FPS_LIMIT;
-	file.s_read_int(&fps, FILE_CLOCK_FPS, "System");
-
-	return fps;
 }
 
 double Clock::get_time() {

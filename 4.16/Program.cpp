@@ -30,7 +30,7 @@ GLuint load_shaders(const Program* program) {
 			data = sdata.c_str();
 		}
 		else {
-			std::cout << "Couldn't open shader file -- " << program[i].file_path << std::endl;
+			std::cout << "Couldn't open shader file -- " << program[i].file_path << '\n';
 			loaded = false;
 		}
 
@@ -39,14 +39,14 @@ GLuint load_shaders(const Program* program) {
 			glCompileShader(shader_id);
 
 			glGetShaderiv(shader_id, GL_COMPILE_STATUS, &result);
-			std::cout << "Shader Result -- " << program[i].file_path << " -- " << ((result == GL_TRUE) ? "Good" : "Bad") << std::endl;
+			std::cout << "Shader Result -- " << program[i].file_path << " -- " << ((result == GL_TRUE) ? "Good" : "Bad") << '\n';
 			glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
 			if (info_log_length != 0) {
 				GLchar* info_log = new GLchar[info_log_length];
 				glGetShaderInfoLog(shader_id, info_log_length, 0, info_log);
-				std::cout << "-- Shader Log --" << std::endl << info_log << std::endl;
-				std::cout << "-- " << program[i].file_path << "-- " << std::endl << data << std::endl;
-				delete info_log;
+				std::cout << "-- Shader Log --" << std::endl << info_log << '\n';
+				std::cout << "-- " << program[i].file_path << "-- " << std::endl << data << '\n';
+				delete[] info_log;
 			}
 		}
 	}
@@ -61,6 +61,8 @@ GLuint load_shaders(const Program* program) {
 		glDetachShader(program_id, shader_id);
 		glDeleteShader(shader_id);
 	}
+
+	std::cout << "Program id: " << program_id << std::endl;
 
 	return program_id;
 }

@@ -2,6 +2,7 @@
 
 #include "Clock.h"
 #include "Window.h"
+#include "ResourceManager.h"
 
 #include "Camera.h"
 
@@ -16,8 +17,10 @@ Engine::Engine() :
 	Window* window = new Window;
 	_environment.set_window(window);
 
-	_program_id = load_shaders(_program);
-	_model = new Model(_program_id, "Data\\Models\\fw.txt");
+	ResourceManager* resource_manager = new ResourceManager;
+	_environment.set_resource_manager(resource_manager);
+
+	_model = new Model("Data\\Models\\kokiri forest exit.txt");
 }
 
 Engine::~Engine() {
@@ -27,7 +30,6 @@ Engine::~Engine() {
 
 
 void Engine::run() {
-	_environment.get_window()->get_camera()->attach_shader(_program_id);
 
 	while (!_exit) {
 		_environment.get_clock()->update();

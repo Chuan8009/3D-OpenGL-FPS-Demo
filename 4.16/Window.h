@@ -10,25 +10,25 @@
 
 constexpr GLfloat WINDOW_BACKGROUND_COLOR[4] = { 0.0, 0.0, 0.0, 1.0 };
 
+struct Window_Settings {
+	int width = 1000, height = 800;
+	std::string title = "Window";
+	int x_pos = 0, y_pos = 0;
+};
+
+Window_Settings load_window_settings(const char* file_path = WINDOW_FILE);
+
 class Camera;
 
 class Window {
 public:
-	struct Settings {
-		int width = 1000, height = 800;
-		std::string title = "Window";
-		int x_pos, y_pos;
-	};
-
-	Window(const Settings settings = load_settings(WINDOW_FILE));
+	Window(const Window_Settings settings = load_window_settings());
 	~Window();
 
 	void update();
 
 	GLFWwindow* get_glfw_window();
 	Camera* get_camera();
-
-	static Settings load_settings(const char* file_path = WINDOW_FILE);
 private:
 	GLFWwindow* _window;
 	Camera* _camera;

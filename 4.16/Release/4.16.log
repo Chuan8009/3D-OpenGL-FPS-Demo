@@ -2,21 +2,22 @@
   Clock.cpp
   Engine.cpp
   Environment.cpp
-D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(65,14): warning C4150: deletion of pointer to incomplete type 'Log'; no destructor called
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(74,14): warning C4150: deletion of pointer to incomplete type 'Log'; no destructor called
 D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.h(5): message : see declaration of 'Log'
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.cpp(84,27): warning C4150: deletion of pointer to incomplete type 'ResourceManager'; no destructor called
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\Environment.h(7): message : see declaration of 'ResourceManager'
   FileReader.cpp
-  Mesh.cpp
+  main.cpp
   Model.cpp
   ModelLoader.cpp
-  Timer.cpp
-  Transform.cpp
+  Program.cpp
+  ResourceManager.cpp
   Window.cpp
-  main.cpp
 soil2-debug.lib(SOIL2.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
 LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  131 of 843 functions (15.5%) were compiled, the rest were copied from previous compilation.
-    16 functions were new in current compilation
-    68 functions had inline decision re-evaluated but remain unchanged
+  398 of 991 functions (40.2%) were compiled, the rest were copied from previous compilation.
+    162 functions were new in current compilation
+    99 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   4.16.vcxproj -> D:\Documents\Visual Studio 2019\Projects\4.16\Release\4.16.exe

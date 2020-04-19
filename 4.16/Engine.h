@@ -18,13 +18,6 @@ public:
 private:
 	bool _exit;
 
-	static constexpr Program _program[] = { { GL_VERTEX_SHADER, "Data\\Shaders\\mult_texture_shader.vert"   },
-											 { GL_FRAGMENT_SHADER, "Data\\Shaders\\mult_texture_shader.frag" },
-											 { GL_NONE, 0 }
-	};
-
-	GLuint _program_id;
-
 	Model *_model;
 
 	Environment _environment;

@@ -8,7 +8,7 @@
 
 struct Program {
 	unsigned short type;
-	const char* file_path;
+	std::string file_path;
 };
 
 // last address in program must end with type = GL_NONE

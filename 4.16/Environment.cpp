@@ -8,10 +8,11 @@
 Environment* Environment::_instance = nullptr;
 
 Environment::Environment() :
-	_mode		( NULL ),
-	_clock		( nullptr ),
-	_log		( nullptr ),
-	_window		( nullptr )
+	_mode				( NULL    ),
+	_clock				( nullptr ),
+	_log				( nullptr ),
+	_window				( nullptr ),
+	_resource_manager	( nullptr )
 {
 	assert(!_instance);
 	_instance = this;
@@ -43,6 +44,10 @@ void Environment::set_window(Window* window) {
 	_window = window;
 }
 
+void Environment::set_resource_manager(ResourceManager* resource_manager) {
+	_resource_manager = resource_manager;
+}
+
 Clock* Environment::get_clock() {
 	return _clock;
 }
@@ -53,6 +58,10 @@ Log* Environment::get_log() {
 
 Window* Environment::get_window() {
 	return _window;
+}
+
+ResourceManager* Environment::get_resource_manager() {
+	return _resource_manager;
 }
 
 void Environment::shut_down() {
@@ -69,5 +78,10 @@ void Environment::shut_down() {
 	if (_clock) {
 		delete _clock;
 		_clock = nullptr;
+	}
+
+	if (_resource_manager) {
+		delete _resource_manager;
+		_resource_manager = nullptr;
 	}
 }
