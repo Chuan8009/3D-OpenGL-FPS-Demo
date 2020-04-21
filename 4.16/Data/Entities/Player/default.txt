@@ -1,0 +1,6 @@
+- Default
+
+# Entity
+str_name Player
+
+# Transform

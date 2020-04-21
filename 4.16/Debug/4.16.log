@@ -1,6 +1,9 @@
-﻿  Engine.cpp
-  Model.cpp
+﻿  Model.cpp
   ModelLoader.cpp
   ResourceManager.cpp
+  Engine.cpp
+  Environment.cpp
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\src\System\Environment.cpp(76,14): warning C4150: deletion of pointer to incomplete type 'Log'; no destructor called
+D:\Documents\Visual Studio 2019\Projects\4.16\4.16\src\System\Environment.h(5): message : see declaration of 'Log'
   Generating Code...
   4.16.vcxproj -> D:\Documents\Visual Studio 2019\Projects\4.16\Debug\4.16.exe

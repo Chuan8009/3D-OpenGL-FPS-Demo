@@ -13,96 +13,147 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{e6d5234e-6a71-47ca-93b3-3981b192b566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{a5c4072e-f6e4-4111-8e23-b84c9e0951b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{2fd5079c-2653-4f03-ae90-3e233320f388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{c1c81d2f-5565-4e7f-94d6-e425a14a4008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{2e5b02d0-6e89-43cd-81b3-9af991c3d8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources">
+      <UniqueIdentifier>{5b9590d9-f03f-452a-9bb9-d1df65012c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources\Entities">
+      <UniqueIdentifier>{f7485208-0131-4bb1-b2d5-656478824ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Entities">
+      <UniqueIdentifier>{7bcefeb8-4452-4daa-b127-6c75df7638f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources\Entities\Components">
+      <UniqueIdentifier>{0225f2ba-2d09-4476-8a3c-fbe17808f0ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Entities\Components">
+      <UniqueIdentifier>{3449c9d5-eb89-46f2-a9ae-40c0425de728}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\System\Engine.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\System\Environment.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="Environment.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Utility\FileReader.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="FileReader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\System\gl3w.c">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="gl3w.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\System\main.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\Mesh.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\Model.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\ModelLoader.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\Program.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\ResourceManager.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Utility\Timer.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Program.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\Transform.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="ModelLoader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\Window.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Resources\Camera.cpp">
+      <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Utility\Clock.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Entity.cpp">
+      <Filter>Source Files\Resources\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\ComponentLoader.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\TransformComponent.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clock.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\System\Engine.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\System\Environment.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="Environment.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Utility\FileReader.h">
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="FileReader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Mesh.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Model.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\ModelLoader.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Program.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\ResourceManager.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Texture.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Utility\Timer.h">
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Program.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Transform.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="ModelLoader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Camera.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Resources\Window.h">
+      <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Utility\Clock.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Entity.h">
+      <Filter>Header Files\Resources\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\ComponentLoader.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\TransformComponent.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\Component.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,10 +2,14 @@
 
 in vec2 uv;
 
-layout (location = 0) out vec3 f_color;
+layout (location = 0) out vec4 f_color;
 
 uniform sampler2D texture_sampler;
 
 void main() {
-	f_color = texture(texture_sampler, uv).rgb;
+	vec4 tex_color = texture(texture_sampler, uv);
+	if (tex_color.a < 0.1) {	
+		discard;
+	}
+	f_color = tex_color;
 }
