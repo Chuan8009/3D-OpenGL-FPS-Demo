@@ -1,0 +1,7 @@
+- Box
+
+# Entity
+model_id 1
+str_name Box
+
+# Transform

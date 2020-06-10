@@ -1,6 +1,13 @@
 - Default
 
+# Player
+fire_rate 0.5
+weight 30000000
+
 # Entity
+model_id 0
 str_name Player
 
 # Transform
+scale 0.01 0.01 0.01
+speed 0.01

@@ -7,6 +7,8 @@
 #include "../src/Resources/Model.h"
 #include "../src/Resources/ModelLoader.h"
 
+class Entity;
+
 class Engine {
 public:
 	Engine();

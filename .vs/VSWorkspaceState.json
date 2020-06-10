@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\4.16",
+    "\\4.16\\src",
+    "\\4.16\\src\\Resources",
+    "\\4.16\\src\\Resources\\Entities",
+    "\\4.16\\src\\Resources\\Entities\\Components",
+    "\\4.16\\src\\System",
+    "\\4.16\\src\\Utility"
+  ],
+  "SelectedNode": "\\4.16\\src\\Resources\\Entities\\Components\\PlayerComponent.cpp",
+  "PreviewInSolutionExplorer": false
+}

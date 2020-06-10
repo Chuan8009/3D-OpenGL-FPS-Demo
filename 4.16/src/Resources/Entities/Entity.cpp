@@ -2,26 +2,37 @@
 
 #include "Components/ComponentLoader.h"
 
+unsigned int make_unique_id() {
+	static unsigned int id = 0;
+	return id++;
+}
+
 Entity::Entity() :
-	_id			( -1 )
+	_unique_id  ( make_unique_id() ),
+	_id			( -1 ),
+	_model_id	( 0 ),
+	_destroy	( false )
 {}
 
 Entity::Entity(const std::string_view type, const int id) :
+	_unique_id  ( make_unique_id() ),
 	_type		( type ),
-	_id			( id )
-{}
+	_id			( id ),
+	_model_id	( 0 ),
+	_destroy    ( false )
+{
+	// ready to load
+}
 
 Entity::Entity(const Entity& rhs) :
+	_unique_id	( make_unique_id() ),
 	_type		( rhs._type ),
 	_id			( rhs._id ),
-	_name		( rhs._name )
+	_model_id	( rhs._model_id ),
+	_name		( rhs._name ),
+	_destroy	( rhs._destroy )
 {
-	// copy components
-	for (size_t i = 0; i < TOTAL_COMPONENTS; ++i) {
-		if (rhs._components[i]) {
-			_components[i] = rhs._components[i]->copy(shared_from_this());
-		}
-	}
+	// ready to copy
 }
 
 Entity::~Entity() 
@@ -29,11 +40,6 @@ Entity::~Entity()
 
 void Entity::add(std::shared_ptr<Component> component) {
 	_components[component->get_type()] = component;
-}
-
-template<typename T>
-std::shared_ptr<T> Entity::get() {
-	return static_cast<T>(_components[T::_type]);
 }
 
 void Entity::update() {
@@ -50,6 +56,22 @@ void Entity::clear() {
 	}
 }
 
+void Entity::copy(const Entity& rhs) {
+	for (size_t i = 0; i < TOTAL_COMPONENTS; ++i) {
+		if (rhs._components[i]) {
+			_components[i] = rhs._components[i]->copy(shared_from_this());
+		}
+	}
+}
+
+void Entity::destroy() {
+	_destroy = true;
+}
+
+unsigned int Entity::get_unique_id() {
+	return _unique_id;
+}
+
 int Entity::get_id() {
 	return _id;
 }
@@ -58,6 +80,22 @@ std::string Entity::get_type() {
 	return _type;
 }
 
+int Entity::get_model_id() {
+	return _model_id;
+}
+
+std::string_view Entity::get_name() {
+	return _name;
+}
+
+void Entity::set_model_id(const int model_id) {
+	_model_id = model_id;
+}
+
 void Entity::set_name(const std::string_view name) {
 	_name = name;
+}
+
+bool Entity::get_destroy() {
+	return _destroy;
 }

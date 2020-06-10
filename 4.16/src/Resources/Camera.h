@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#include "../src/Utility/Collision.h"
+
 #define CAMERA_FORWARD 1
 #define CAMERA_BACKWARD 2
 #define CAMERA_LEFT 3
@@ -34,6 +36,13 @@ public:
 
 	void attach_shader(const GLuint program);
 	void detach_shader(const GLuint program);
+
+	glm::vec3 get_direction();
+	glm::vec3 get_position();
+
+	void set_position(glm::vec3 position);
+
+	bool is_collision();
 private:
 	int _window_w;
 	int _window_h;
@@ -57,6 +66,8 @@ private:
 	glm::vec3 _position;
 
 	std::vector<GLuint> _programs;
+
+	Bounding_Box _bounding_box;
 };
 
 #endif

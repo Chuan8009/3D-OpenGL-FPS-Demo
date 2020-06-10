@@ -1,0 +1,13 @@
+- Bullet
+
+# Entity
+model_id 1
+str_name Bullet
+
+# Transform
+scale 0.05 0.05 0.05
+rotation 1.0 1.0 1.0
+speed 0.01
+
+# Projectile
+duration 5

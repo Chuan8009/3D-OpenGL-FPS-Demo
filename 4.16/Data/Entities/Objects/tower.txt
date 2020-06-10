@@ -1,0 +1,7 @@
+- Tower
+
+# Entity
+model_id 3
+str_name Tower
+
+# Transform

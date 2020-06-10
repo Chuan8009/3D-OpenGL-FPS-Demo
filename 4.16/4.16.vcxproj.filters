@@ -99,6 +99,12 @@
     <ClCompile Include="src\Resources\Entities\Components\TransformComponent.cpp">
       <Filter>Source Files\Resources\Entities\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\ProjectileComponent.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\PlayerComponent.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\System\Engine.h">
@@ -153,6 +159,15 @@
       <Filter>Header Files\Resources\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Resources\Entities\Components\Component.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\ProjectileComponent.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility\Collision.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\PlayerComponent.h">
       <Filter>Header Files\Resources\Entities\Components</Filter>
     </ClInclude>
   </ItemGroup>

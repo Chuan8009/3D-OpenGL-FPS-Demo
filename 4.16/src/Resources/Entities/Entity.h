@@ -8,6 +8,9 @@
 
 #include "Components/Component.h"
 
+constexpr const char* ENTITY_PLAYER = "Player";
+constexpr const char* ENTITY_OBJECT = "Object";
+
 class Entity : public std::enable_shared_from_this<Entity> {
 public:
 	Entity();
@@ -17,22 +20,36 @@ public:
 
 	void add(std::shared_ptr<Component> component);
 
-	template<typename T>
-	std::shared_ptr<T> get();
+	template<typename _Component>
+	std::shared_ptr<_Component> get() {
+		return std::static_pointer_cast<_Component>(_components[_Component::_type]);
+	}
 
 	void update();
 
 	void clear();
 
+	void copy(const Entity& rhs);
+
+	void destroy();
+
+	unsigned int get_unique_id();
 	int get_id();
 	std::string get_type();
+	int get_model_id();
+	std::string_view get_name();
+	bool get_destroy();
 
+	void set_model_id(const int model_id);
 	void set_name(const std::string_view name);
-
 private:
+	unsigned int _unique_id;
 	int _id;
+	int _model_id;
 	std::string _type;
 	std::string _name;
+
+	bool _destroy;
 
 	std::array<std::shared_ptr<Component>, TOTAL_COMPONENTS> _components{ nullptr };
 };

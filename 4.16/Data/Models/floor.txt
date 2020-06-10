@@ -1,0 +1,4 @@
+# Model
+dir Data\Models\floor\
+file floor.obj
+program_id 3

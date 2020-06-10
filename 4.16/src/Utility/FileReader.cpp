@@ -54,7 +54,6 @@ FileReader::FileReader(const char* file_path, size_t(*hash_func)(const std::stri
 	_data[_section_hash_val].key_val = _hash_func("");
 	_data[_section_hash_val].section = "";
 	_data[_section_hash_val].table.resize(_query[section]);
-	_data[_section_hash_val].empty = false;
 
 	while (std::getline(file, key, ' ')) {
 		std::getline(file, val);
@@ -72,7 +71,6 @@ FileReader::FileReader(const char* file_path, size_t(*hash_func)(const std::stri
 			_data[hash_val].key_val = key_val;
 			_data[hash_val].section = val;
 			_data[hash_val].table.resize(_query[section]);
-			_data[hash_val].empty = false;
 			_section_hash_val = hash_val;
 		}
 		else if (key[0] != COMMENT_CHAR) {
@@ -89,6 +87,21 @@ FileReader::FileReader(const char* file_path, size_t(*hash_func)(const std::stri
 }
 
 bool FileReader::s_read(std::string* val, const std::string_view key, const std::string_view section) {
+	if (!_read) {
+		return false;
+	}
+
+	const int section_hash_val = s_hash(section);
+	valid_hash(section_hash_val);
+
+	const int key_hash_val = k_hash(key, section_hash_val);
+	valid_hash(key_hash_val);
+
+	*val = _data[section_hash_val].table[key_hash_val].value;
+	return true;
+}
+
+bool FileReader::s_read(std::string_view* val, const std::string_view key, const std::string_view section) {
 	if (!_read) {
 		return false;
 	}
@@ -183,6 +196,18 @@ bool FileReader::read(std::string* val, const std::string_view key) {
 	return true;
 }
 
+bool FileReader::read(std::string_view* val, const std::string_view key) {
+	if (!_read) {
+		return false;
+	}
+
+	const int key_hash_val = k_hash(key, _section_hash_val);
+	valid_hash(key_hash_val);
+
+	*val = _data[_section_hash_val].table[key_hash_val].value;
+	return true;
+}
+
 bool FileReader::read(int* val, const std::string_view key) {
 	if (!_read) {
 		return false;
@@ -240,6 +265,18 @@ bool FileReader::read(double* val, const std::string_view key) {
 }
 
 bool FileReader::read(std::string* val, const int& key) {
+	if (!_read) {
+		return false;
+	}
+
+	const int key_hash_val = i_hash(key, _section_hash_val);
+	valid_hash(key_hash_val);
+
+	*val = _data[_section_hash_val].table[key_hash_val].value;
+	return true;
+}
+
+bool FileReader::read(std::string_view* val, const int& key) {
 	if (!_read) {
 		return false;
 	}
@@ -357,7 +394,7 @@ int FileReader::_new_section_hash_val(const int& section_val) {
 	int hash_val = section_val % _data.capacity();
 	const int start_val = hash_val;
 
-	while (!_data[hash_val].empty) {
+	while (!_data[hash_val].table.empty()) {
 		hash_val = (hash_val + 1) % _data.capacity();
 
 		if (hash_val == start_val) {
@@ -369,7 +406,7 @@ int FileReader::_new_section_hash_val(const int& section_val) {
 }
 
 int FileReader::_get_key_hash_val(const int& key_val, const int& section_hash_val) {
-	if (_data[section_hash_val].empty) {
+	if (_data[section_hash_val].table.empty()) {
 		return -1;
 	}
 
@@ -388,7 +425,7 @@ int FileReader::_get_key_hash_val(const int& key_val, const int& section_hash_va
 }
 
 int FileReader::_new_key_hash_val(const int& key_val, const int& section_hash_val) {
-	if (_data[section_hash_val].empty) {
+	if (_data[section_hash_val].table.empty()) {
 		return -1;
 	}
 
@@ -430,18 +467,18 @@ void FileReader::_query_file(std::fstream& file) {
 	file.seekg(0, std::ios::beg);
 }
 
-FileReader::const_iterator FileReader::s_begin() {
+FileReader::const_iterator FileReader::s_begin() const {
 	return _data[_section_hash_val].table.begin();
 } 
 
-FileReader::const_iterator FileReader::s_end() {
+FileReader::const_iterator FileReader::s_end() const {
 	return _data[_section_hash_val].table.end();
 }
 
-std::vector<FileReader::Key_Table>::const_iterator FileReader::begin() {
+std::vector<FileReader::Key_Table>::const_iterator FileReader::begin() const {
 	return _data.begin();
 }
 
-std::vector<FileReader::Key_Table>::const_iterator FileReader::end() {
+std::vector<FileReader::Key_Table>::const_iterator FileReader::end() const {
 	return _data.end();
 }

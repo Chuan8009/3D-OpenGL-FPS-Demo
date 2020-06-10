@@ -9,6 +9,16 @@ Transform::Transform(
 	setup_matrices();
 }
 
+Transform::Transform(const Transform& rhs) :
+	_position		 ( rhs._position ),
+	_scale			 ( rhs._scale ),
+	_rotation		 ( rhs._rotation ),
+	_position_matrix ( rhs._position_matrix ),
+	_scale_matrix	 ( rhs._scale_matrix ),
+	_rotation_matrix ( rhs._rotation_matrix ),
+	_model			 ( rhs._model )
+{}
+
 void Transform::setup_matrices() {
 	_position_matrix = glm::translate(glm::mat4(1.0f), _position);
 	_scale_matrix = glm::scale(glm::mat4(1.0f), _scale);
@@ -44,18 +54,18 @@ void Transform::set_rotation(const glm::vec3 rotation) {
 	_model = _position_matrix * _rotation_matrix * _scale_matrix;
 }
 
-const glm::mat4& Transform::get_model() { 
+glm::mat4& Transform::get_model() { 
 	return _model;
 }
 
-const glm::vec3& Transform::get_position() { 
+glm::vec3& Transform::get_position() { 
 	return _position;
 }
 
-const glm::vec3& Transform::get_scale() {
+glm::vec3& Transform::get_scale() {
 	return _scale;
 }
 
-const glm::vec3& Transform::get_rotation() {
+glm::vec3& Transform::get_rotation() {
 	return _rotation;
 }

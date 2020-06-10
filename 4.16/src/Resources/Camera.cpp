@@ -2,6 +2,9 @@
 
 #include "../src/System/Environment.h"
 #include "../src/Utility/Clock.h"
+#include "../src/Resources/ResourceManager.h"
+#include "../src/Resources/Entities/Entity.h"
+#include "../src/Resources/Entities/Components/TransformComponent.h"
 
 constexpr float SPEED = 10000.0f;
 constexpr float HALF_PIE = 3.14159f / 2.0f;
@@ -26,7 +29,8 @@ Camera::Camera(
 	_horizontal_angle	( horizontal_angle ),
 	_vertical_angle		( vertical_angle ),
 	_position			( position ),
-	_projection			( glm::perspective(fov, aspect, z_near, z_far) )
+	_projection			( glm::perspective(fov, aspect, z_near, z_far) ),
+	_bounding_box		( { glm::vec3(-.2, -2, -.2), glm::vec3(.2, 1, .2) } ) 
 {}
 
 void Camera::attach_shader(GLuint program) {
@@ -45,12 +49,16 @@ void Camera::detach_shader(GLuint program) {
 }
 
 void Camera::move(const int direction) {
+	glm::vec3 old_position = _position;
+
 	if (direction == CAMERA_FORWARD) {
-		_position += _direction * SPEED * (float)Environment::get().get_clock()->get_time();
+		_position.x += _direction.x * SPEED * (float)Environment::get().get_clock()->get_time();
+		_position.z += _direction.z * SPEED * (float)Environment::get().get_clock()->get_time();
 	}
 
 	if (direction == CAMERA_BACKWARD) {
-		_position -= _direction * SPEED * (float)Environment::get().get_clock()->get_time();
+		_position.x -= _direction.x * SPEED * (float)Environment::get().get_clock()->get_time();
+		_position.z -= _direction.z * SPEED * (float)Environment::get().get_clock()->get_time();
 	}
 
 	if (direction == CAMERA_LEFT) {
@@ -69,6 +77,10 @@ void Camera::move(const int direction) {
 
 	if (direction == CAMERA_DOWN) {
 		_position.y -= (float)Environment::get().get_clock()->get_time() * SPEED;
+	}
+
+	if (is_collision()) {
+		_position = old_position;
 	}
 }
 
@@ -102,4 +114,49 @@ void Camera::update() {
 		glUseProgram(p);
 		glUniformMatrix4fv(glGetUniformLocation(p, "view"), 1, GL_FALSE, &_view[0][0]);
 	}
+}
+
+glm::vec3 Camera::get_direction() {
+	return _direction;
+}
+
+glm::vec3 Camera::get_position() {
+	return _position;
+}
+
+bool Camera::is_collision() {
+	auto entities = Environment::get().get_resources()->get_entities();
+
+	for (auto e : *entities) {
+		if (auto e_transform = e->get<TransformComponent>()) {
+			auto b_model = Environment::get().get_resources()->get_model(e->get_model_id());
+
+			for (auto b_mesh : b_model->_meshes) {
+
+				Bounding_Box a = _bounding_box;
+				a.min += _position;
+				a.max += _position;
+
+				Bounding_Box b = b_mesh._bounding_box;
+				b.min.x *= e_transform->_transform.get_scale().x;
+				b.min.y *= e_transform->_transform.get_scale().y;
+				b.min.z *= e_transform->_transform.get_scale().z;
+				b.max.x *= e_transform->_transform.get_scale().x;
+				b.max.y *= e_transform->_transform.get_scale().y;
+				b.max.z *= e_transform->_transform.get_scale().z;
+				b.min += e_transform->_transform.get_position();
+				b.max += e_transform->_transform.get_position();
+
+				if (collision(a, b)) {
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+void Camera::set_position(glm::vec3 position) {
+	_position = position;
 }

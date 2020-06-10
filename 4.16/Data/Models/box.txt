@@ -1,0 +1,4 @@
+# Model
+dir Data\Models\box\
+file box.obj
+program_id 2

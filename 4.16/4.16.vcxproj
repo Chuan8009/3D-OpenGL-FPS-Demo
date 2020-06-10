@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\Resources\Camera.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\ComponentLoader.cpp" />
+    <ClCompile Include="src\Resources\Entities\Components\PlayerComponent.cpp" />
+    <ClCompile Include="src\Resources\Entities\Components\ProjectileComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\TransformComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Entity.cpp" />
     <ClCompile Include="src\Resources\Mesh.cpp" />
@@ -42,6 +44,8 @@
     <ClInclude Include="src\Resources\Camera.h" />
     <ClInclude Include="src\Resources\Entities\Components\Component.h" />
     <ClInclude Include="src\Resources\Entities\Components\ComponentLoader.h" />
+    <ClInclude Include="src\Resources\Entities\Components\PlayerComponent.h" />
+    <ClInclude Include="src\Resources\Entities\Components\ProjectileComponent.h" />
     <ClInclude Include="src\Resources\Entities\Components\TransformComponent.h" />
     <ClInclude Include="src\Resources\Entities\Entity.h" />
     <ClInclude Include="src\Resources\Mesh.h" />
@@ -55,6 +59,7 @@
     <ClInclude Include="src\System\Engine.h" />
     <ClInclude Include="src\System\Environment.h" />
     <ClInclude Include="src\Utility\Clock.h" />
+    <ClInclude Include="src\Utility\Collision.h" />
     <ClInclude Include="src\Utility\FileReader.h" />
     <ClInclude Include="src\Utility\Timer.h" />
   </ItemGroup>

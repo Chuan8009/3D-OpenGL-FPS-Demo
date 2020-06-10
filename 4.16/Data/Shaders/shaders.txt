@@ -1,3 +1,5 @@
 # Shaders
 0 Data\Shaders\Color Shader\color_shader.txt
 1 Data\Shaders\Texture Shader\texture_shader.txt
+2 Data\Shaders\Color Shader\color_shader2.txt
+3 Data\Shaders\Color Shader\color_shader3.txt

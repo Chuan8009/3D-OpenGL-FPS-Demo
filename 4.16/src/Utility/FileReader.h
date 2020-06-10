@@ -33,7 +33,6 @@ public:
 		int key_val = 0;
 		std::string section;
 		std::vector<Key_Value> table;
-		bool empty = true;
 	};
 
 	typedef std::vector<Key_Value>::iterator iterator;
@@ -44,6 +43,7 @@ public:
 	// s_read : reads from a defined section - default is no section
 	// returns false if no key exists
 	bool s_read   (std::string* val, const std::string_view key, const std::string_view section = "");
+	bool s_read	  (std::string_view* val, const std::string_view key, const std::string_view section = "");
 	bool s_read   (int *val, const std::string_view key, const std::string_view section = "");
 	bool s_read   (unsigned int *val, const std::string_view key, const std::string_view section = "");
 	bool s_read   (float *val, const std::string_view key, const std::string_view section = "");
@@ -52,12 +52,14 @@ public:
 	// read : reads from current section using set_section - default is no section
 	// returns false if no key exists
 	bool read     (std::string* val, const std::string_view key);
+	bool read	  (std::string_view* val, const std::string_view key);
 	bool read     (int* val, const std::string_view key);
 	bool read     (unsigned int* val, const std::string_view key);
 	bool read     (float* val, const std::string_view key);
 	bool read     (double* val, const std::string_view key);
 
 	bool read	  (std::string* val, const int& key);
+	bool read	  (std::string_view* val, const int& key);
 	bool read	  (int* val, const int& key);
 	bool read     (unsigned int* val, const int& key);
 	bool read	  (float* val, const int& key);
@@ -71,11 +73,11 @@ public:
 	bool is_read();
 
 	// section iterators
-	const_iterator s_begin();
-	const_iterator s_end();
+	const_iterator s_begin() const;
+	const_iterator s_end() const;
 
-	std::vector<Key_Table>::const_iterator begin();
-	std::vector<Key_Table>::const_iterator end();
+	std::vector<Key_Table>::const_iterator begin() const;
+	std::vector<Key_Table>::const_iterator end() const;
 
 	static size_t str_val(const std::string_view str);
 	static size_t int_val(const std::string_view str);

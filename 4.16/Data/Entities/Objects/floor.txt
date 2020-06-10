@@ -1,0 +1,8 @@
+- Floor
+
+# Entity
+model_id 2
+str_name Floor
+
+# Transform
+scale 10 10 10

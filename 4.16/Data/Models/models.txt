@@ -1,3 +1,8 @@
 # Models
 0 Data\Models\link.txt
+1 Data\Models\box.txt
+2 Data\Models\floor.txt
+3 Data\Models\tower.txt
+4 Data\Models\bridge.txt
+5 Data\Models\level.txt
 -1 Data\Models\fw.txt

@@ -1,0 +1,7 @@
+- Bridge
+
+# Entity
+model_id 4
+str_name Bridge
+
+# Transform
