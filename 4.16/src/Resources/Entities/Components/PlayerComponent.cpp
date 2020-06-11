@@ -69,6 +69,8 @@ void PlayerComponent::fire() {
 		auto camera_direction = Environment::get().get_window()->get_camera()->get_direction();
 		auto camera_position = Environment::get().get_window()->get_camera()->get_position();
 		bullet->get<ProjectileComponent>()->fire(camera_direction);
+		camera_position.z += .3 * camera_direction.z;
+		camera_position.x += .3 * camera_direction.x;
 		bullet->get<TransformComponent>()->set(camera_position);
 	}
 }

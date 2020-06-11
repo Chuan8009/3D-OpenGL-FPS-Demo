@@ -79,6 +79,27 @@ void Mesh::draw(const GLuint program, Transform& transform) {
 	glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_SHORT, (void*)0);
 }
 
+void Mesh::draw_lines(const GLuint program, Transform& transform) {
+	glBindVertexArray(_vao);
+	glUseProgram(program);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _normal_buffer);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_FALSE, &transform.get_model()[0][0]);
+
+	glDrawArrays(GL_LINES, 0, _vertices.size());
+}
+
 float two_decimal(float num) {
 	num = (int)(num * 100.0f + .5f);
 	return num / 100;

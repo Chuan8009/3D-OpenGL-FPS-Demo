@@ -72,11 +72,13 @@ void Camera::move(const int direction) {
 	}
 
 	if (direction == CAMERA_UP) {
-		_position.y += (float)Environment::get().get_clock()->get_time() * SPEED;
+		//_position.y += (float)Environment::get().get_clock()->get_time() * SPEED;
+		_position.y += 1;
 	}
 
 	if (direction == CAMERA_DOWN) {
-		_position.y -= (float)Environment::get().get_clock()->get_time() * SPEED;
+		//_position.y -= (float)Environment::get().get_clock()->get_time() * SPEED;
+		_position.y -= 1;
 	}
 
 	if (is_collision()) {
@@ -125,31 +127,15 @@ glm::vec3 Camera::get_position() {
 }
 
 bool Camera::is_collision() {
-	auto entities = Environment::get().get_resources()->get_entities();
+	Bounding_Box a = _bounding_box;
+	a.min += _position;
+	a.max += _position;
 
-	for (auto e : *entities) {
-		if (auto e_transform = e->get<TransformComponent>()) {
-			auto b_model = Environment::get().get_resources()->get_model(e->get_model_id());
-
-			for (auto b_mesh : b_model->_meshes) {
-
-				Bounding_Box a = _bounding_box;
-				a.min += _position;
-				a.max += _position;
-
-				Bounding_Box b = b_mesh._bounding_box;
-				b.min.x *= e_transform->_transform.get_scale().x;
-				b.min.y *= e_transform->_transform.get_scale().y;
-				b.min.z *= e_transform->_transform.get_scale().z;
-				b.max.x *= e_transform->_transform.get_scale().x;
-				b.max.y *= e_transform->_transform.get_scale().y;
-				b.max.z *= e_transform->_transform.get_scale().z;
-				b.min += e_transform->_transform.get_position();
-				b.max += e_transform->_transform.get_position();
-
-				if (collision(a, b)) {
-					return true;
-				}
+	auto cells = Environment::get().get_resources()->get_entity_grid()->get_cells(a);
+	for(auto vec : cells) {
+		for(auto e : *vec) {
+			if(collision(a, e.first)) {
+				return true;
 			}
 		}
 	}

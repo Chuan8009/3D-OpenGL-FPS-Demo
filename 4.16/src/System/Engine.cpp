@@ -45,6 +45,8 @@ void Engine::run() {
 	*/
 
 	auto level = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 5);
+	level->get<TransformComponent>()->set(glm::vec3(100, 0, 100));
+	Environment::get().get_resources()->build_entity_grid();
 
 	while (!_exit) {
 		_environment.get_clock()->update();
@@ -122,7 +124,36 @@ void Engine::render() {
 
 	_environment.get().get_resources()->render_entities();
 
+	debug_draw();
+
 	//Environment::get().get_resource_manager()->get_model(1)->draw();
 
 	glfwSwapBuffers(_environment.get_window()->get_glfw_window());
+}
+
+void Engine::debug_draw() {
+	auto grid = Environment::get().get_resources()->get_entity_grid();
+	static std::vector<glm::vec3> points;
+	static bool draw = false;
+	static Mesh lines;
+	static Transform transform;
+
+	if (!draw) {
+		for (unsigned int i = 0; i < grid->_width; i += grid->_cell_width) {
+			points.push_back(glm::vec3(i, .1, -(grid->_height / 2)));
+			points.push_back(glm::vec3(i, .1, (grid->_height / 2)));
+		}
+
+		for (unsigned int i = 0; i < grid->_height; i += grid->_cell_height) {
+			points.push_back(glm::vec3(-(grid->_width / 2), .1, i));
+			points.push_back(glm::vec3((grid->_width / 2), .1, i));
+		}
+
+		lines._vertices = points;
+		lines.load_buffers();
+
+		draw = true;
+	}
+
+	lines.draw_lines(Environment::get().get_resources()->get_program(2), transform);
 }

@@ -21,6 +21,8 @@ public:
 	void move(glm::vec3 dir);
 	void set(const glm::vec3 pos);
 
+	void update_grid(const glm::vec3 old_position);
+
 	bool is_collision();
 
 	Transform _transform;

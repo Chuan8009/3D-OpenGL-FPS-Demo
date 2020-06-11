@@ -28,7 +28,8 @@
 
 #define ENTITY_FILE "Data\\Entities\\entities.txt"
 
-ResourceManager::ResourceManager()
+ResourceManager::ResourceManager() :
+	_entity_grid ( 10, 10, 500, 500 )
 {}
 
 ResourceManager::~ResourceManager() 
@@ -51,6 +52,7 @@ std::shared_ptr<Entity> ResourceManager::new_entity(const std::string_view type,
 	std::shared_ptr<Entity> new_entity = std::make_shared<Entity>(*entity);
 	new_entity->copy(*entity);
 	_entities.push_back(new_entity);
+	add_to_grid(new_entity);
 	return new_entity;
 }
 
@@ -170,6 +172,7 @@ void ResourceManager::update_entities() {
 			++it;
 		}
 		else {
+			remove_from_grid(*it);
 			it = _entities.erase(it);
 		}
 	}
@@ -183,10 +186,54 @@ void ResourceManager::render_entities() {
 	}
 }
 
+void ResourceManager::build_entity_grid() {
+	_entity_grid.clear();
+
+	for(auto entity : _entities) {
+		if(auto transform = entity->get<TransformComponent>()) {
+			for(auto &mesh : _models[entity->get_model_id()]->_meshes) {
+				auto bounding_box = mesh._bounding_box;
+				bounding_box.min += transform->_transform.get_position();
+				bounding_box.max += transform->_transform.get_position();
+
+				_entity_grid.insert(bounding_box, entity);
+			}
+		}
+	}
+}
+
+void ResourceManager::add_to_grid(std::shared_ptr<Entity> entity) {
+	if (auto transform = entity->get<TransformComponent>()) {
+		for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
+			auto bounding_box = mesh._bounding_box;
+			bounding_box.min += transform->_transform.get_position();
+			bounding_box.max += transform->_transform.get_position();
+
+			_entity_grid.insert(bounding_box, entity);
+		}
+	}
+}
+
+void ResourceManager::remove_from_grid(std::shared_ptr<Entity> entity) {
+	if (auto transform = entity->get<TransformComponent>()) {
+		for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
+			auto bounding_box = mesh._bounding_box;
+			bounding_box.min += transform->_transform.get_position();
+			bounding_box.max += transform->_transform.get_position();
+
+			_entity_grid.remove(bounding_box, entity);
+		}
+	}
+}
+
 std::vector<std::shared_ptr<Entity>>* ResourceManager::get_entities() {
 	return &_entities;
 }
 
 std::shared_ptr<Entity> ResourceManager::get_player() {
 	return _player;
+}
+
+Grid<Entity>* ResourceManager::get_entity_grid() {
+	return &_entity_grid;
 }

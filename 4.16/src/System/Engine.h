@@ -17,6 +17,8 @@ public:
 	void run();
 	void input();
 	void render();
+
+	void debug_draw();
 private:
 	bool _exit;
 

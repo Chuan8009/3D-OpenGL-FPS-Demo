@@ -61,6 +61,7 @@
     <ClInclude Include="src\Utility\Clock.h" />
     <ClInclude Include="src\Utility\Collision.h" />
     <ClInclude Include="src\Utility\FileReader.h" />
+    <ClInclude Include="src\Utility\Grid.h" />
     <ClInclude Include="src\Utility\Timer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

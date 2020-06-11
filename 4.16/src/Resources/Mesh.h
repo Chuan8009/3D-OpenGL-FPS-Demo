@@ -23,6 +23,7 @@ public:
 
 	void load_buffers();
 	void draw(const GLuint program, Transform& transform);
+	void draw_lines(const GLuint program, Transform& transform);
 	void make_bounding_box();
 public:
 	std::vector<Texture>        _textures;

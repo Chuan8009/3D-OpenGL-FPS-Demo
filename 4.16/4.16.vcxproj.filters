@@ -170,5 +170,8 @@
     <ClInclude Include="src\Resources\Entities\Components\PlayerComponent.h">
       <Filter>Header Files\Resources\Entities\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utility\Grid.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
