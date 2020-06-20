@@ -1,4 +1,0 @@
-# Model
-dir Data\Models\fw\
-file fw.fbx
-program_id 1
