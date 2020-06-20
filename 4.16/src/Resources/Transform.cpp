@@ -2,9 +2,10 @@
 
 Transform::Transform(
 	const glm::vec3 position, const glm::vec3 scale, const glm::vec3 rotation) :
-	_position		( position ),
-	_scale			( scale ),
-	_rotation		( rotation )
+	_position		 ( position ),
+	_scale			 ( scale ),
+	_rotation		 ( rotation ),
+	_rotation_matrix ( glm::mat4(1) )
 {
 	setup_matrices();
 }

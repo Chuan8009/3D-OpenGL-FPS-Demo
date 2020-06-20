@@ -48,6 +48,7 @@ public:
 	bool s_read   (unsigned int *val, const std::string_view key, const std::string_view section = "");
 	bool s_read   (float *val, const std::string_view key, const std::string_view section = "");
 	bool s_read   (double *val, const std::string_view key, const std::string_view section = "");
+	bool s_read   (bool* val, const std::string_view key, const std::string_view section = "");
 
 	// read : reads from current section using set_section - default is no section
 	// returns false if no key exists
@@ -57,6 +58,7 @@ public:
 	bool read     (unsigned int* val, const std::string_view key);
 	bool read     (float* val, const std::string_view key);
 	bool read     (double* val, const std::string_view key);
+	bool read	  (bool* val, const std::string_view key);
 
 	bool read	  (std::string* val, const int& key);
 	bool read	  (std::string_view* val, const int& key);
@@ -64,6 +66,7 @@ public:
 	bool read     (unsigned int* val, const int& key);
 	bool read	  (float* val, const int& key);
 	bool read     (double* val, const int& key);
+	bool read	  (bool* val, const int& key);
 
 	// set section to read from using read_string, read_int ...
 	bool set_section(const std::string& section);

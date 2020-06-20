@@ -1,0 +1,4 @@
+# Model
+dir Data\Models\bulb\
+file bulb.obj
+program_id 5

@@ -184,6 +184,18 @@ bool FileReader::s_read(double* val, const std::string_view key, const std::stri
 	return true;
 }
 
+bool FileReader::s_read(bool* val, const std::string_view key, const std::string_view section) {
+	int int_val;
+
+	if(!s_read(&int_val, key, section)) {
+		return false;
+	}
+
+	*val = int_val;
+
+	return true;
+}
+
 bool FileReader::read(std::string* val, const std::string_view key) {
 	if (!_read) {
 		return false;
@@ -264,6 +276,18 @@ bool FileReader::read(double* val, const std::string_view key) {
 	return true;
 }
 
+bool FileReader::read(bool* val, const std::string_view key) {
+	int int_val;
+
+	if(!read(&int_val, key)) {
+		return false;
+	}
+
+	*val = int_val;
+
+	return true;
+}
+
 bool FileReader::read(std::string* val, const int& key) {
 	if (!_read) {
 		return false;
@@ -340,6 +364,18 @@ bool FileReader::read(double* val, const int& key) {
 
 	const std::string_view read_value = _data[_section_hash_val].table[key_hash_val].value;
 	std::from_chars(read_value.data(), read_value.data() + read_value.size(), *val);
+
+	return true;
+}
+
+bool FileReader::read(bool* val, const int& key) {
+	int int_val;
+
+	if(!read(&int_val, key)) {
+		return false;
+	}
+
+	*val = int_val;
 
 	return true;
 }

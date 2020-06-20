@@ -34,3 +34,7 @@ void Model::draw(Transform& transform) const {
 		mesh.draw(_program, transform);
 	}
 }
+
+GLuint Model::get_program() {
+	return _program;
+}

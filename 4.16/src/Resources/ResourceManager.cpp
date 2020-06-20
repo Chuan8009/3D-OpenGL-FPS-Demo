@@ -61,6 +61,8 @@ void ResourceManager::load_resources() {
 	_load_models();
 	_load_entities();
 	_load_player();
+
+	_lights._program = get_program(4);
 }
 
 bool ResourceManager::_load_programs() {
@@ -165,6 +167,8 @@ bool ResourceManager::_load_player() {
 }
 
 void ResourceManager::update_entities() {
+	_lights.clear();
+
 	auto it = _entities.begin();
 	while(it != _entities.end()) {
 		if (!(*it)->get_destroy()) {
@@ -179,9 +183,13 @@ void ResourceManager::update_entities() {
 }
 
 void ResourceManager::render_entities() {
+	_lights.update();
+
 	for(auto e : _entities) {
-		if (auto transform = e->get<TransformComponent>()) {
-			_models[e->get_model_id()]->draw(transform->_transform);
+		if (e->get_draw()) {
+			if (auto transform = e->get<TransformComponent>()) {
+				_models[e->get_model_id()]->draw(transform->_transform);
+			}
 		}
 	}
 }
@@ -191,12 +199,14 @@ void ResourceManager::build_entity_grid() {
 
 	for(auto entity : _entities) {
 		if(auto transform = entity->get<TransformComponent>()) {
-			for(auto &mesh : _models[entity->get_model_id()]->_meshes) {
-				auto bounding_box = mesh._bounding_box;
-				bounding_box.min += transform->_transform.get_position();
-				bounding_box.max += transform->_transform.get_position();
+			if (transform->_has_collision) {
+				for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
+					auto bounding_box = mesh._bounding_box;
+					bounding_box.min += transform->_transform.get_position();
+					bounding_box.max += transform->_transform.get_position();
 
-				_entity_grid.insert(bounding_box, entity);
+					_entity_grid.insert(bounding_box, entity);
+				}
 			}
 		}
 	}
@@ -204,12 +214,14 @@ void ResourceManager::build_entity_grid() {
 
 void ResourceManager::add_to_grid(std::shared_ptr<Entity> entity) {
 	if (auto transform = entity->get<TransformComponent>()) {
-		for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
-			auto bounding_box = mesh._bounding_box;
-			bounding_box.min += transform->_transform.get_position();
-			bounding_box.max += transform->_transform.get_position();
+		if (transform->_has_collision) {
+			for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
+				auto bounding_box = mesh._bounding_box;
+				bounding_box.min += transform->_transform.get_position();
+				bounding_box.max += transform->_transform.get_position();
 
-			_entity_grid.insert(bounding_box, entity);
+				_entity_grid.insert(bounding_box, entity);
+			}
 		}
 	}
 }
@@ -236,4 +248,8 @@ std::shared_ptr<Entity> ResourceManager::get_player() {
 
 Grid<Entity>* ResourceManager::get_entity_grid() {
 	return &_entity_grid;
+}
+
+LightBuffer& ResourceManager::get_light_buffer() {
+	return _lights;
 }

@@ -22,6 +22,8 @@ public:
 private:
 	bool _exit;
 
+	void make_lights();
+
 	Environment _environment;
 };
 

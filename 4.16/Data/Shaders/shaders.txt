@@ -3,3 +3,5 @@
 1 Data\Shaders\Texture Shader\texture_shader.txt
 2 Data\Shaders\Color Shader\color_shader2.txt
 3 Data\Shaders\Color Shader\color_shader3.txt
+4 Data\Shaders\Texture Light Shader\texture_light_shader.txt
+5 Data\Shaders\Color Shader\color_shader4.txt

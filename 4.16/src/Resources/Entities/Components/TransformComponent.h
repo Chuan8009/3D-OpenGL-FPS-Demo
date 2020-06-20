@@ -8,7 +8,7 @@ class Entity;
 
 class TransformComponent : public Component {
 public:
-	TransformComponent(std::shared_ptr<Entity> entity, glm::vec3 scale, glm::vec3 rotation, float speed);
+	TransformComponent(std::shared_ptr<Entity> entity, glm::vec3 scale, glm::vec3 rotation, float speed, bool has_collision);
 	TransformComponent(std::shared_ptr<Entity> new_entity, const TransformComponent& rhs);
 	std::shared_ptr<Component> copy(std::shared_ptr<Entity> new_entity) const;
 
@@ -28,6 +28,8 @@ public:
 	Transform _transform;
 
 	float _speed;
+
+	bool _has_collision;
 
 };
 

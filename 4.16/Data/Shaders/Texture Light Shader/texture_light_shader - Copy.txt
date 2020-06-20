@@ -1,0 +1,4 @@
+- Texture Shader
+dir Data\Shaders\Texture Light Shader\
+vertex texture_light_shader.vert
+fragment texture_light_shader.frag

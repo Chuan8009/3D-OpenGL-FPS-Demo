@@ -1,12 +1,2 @@
-﻿  PlayerComponent.cpp
-D:\Documents\Visual Studio 2019\Projects\4.16\4.16\src\Resources\Entities\Components\PlayerComponent.cpp(72,47): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-D:\Documents\Visual Studio 2019\Projects\4.16\4.16\src\Resources\Entities\Components\PlayerComponent.cpp(73,47): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
+﻿  LightBuffer.cpp
   4.16.vcxproj -> D:\Documents\Visual Studio 2019\Projects\4.16\Debug\4.16.exe

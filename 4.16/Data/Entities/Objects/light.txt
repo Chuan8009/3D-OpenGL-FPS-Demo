@@ -1,0 +1,14 @@
+- Light
+
+# Entity
+model_id 1
+str_name Light
+draw 0
+
+# Light
+program 4
+color 1 0.2 0.5
+intensity 40
+
+# Transform
+collidable 0

@@ -1,13 +1,17 @@
 - Bullet
 
 # Entity
-model_id 1
+model_id 6
 str_name Bullet
 
 # Transform
-scale 0.05 0.05 0.05
-rotation 1.0 1.0 1.0
-speed 0.01
+speed 1
+
+# Light
+program 4
+color 1 0.2 0.2
+intensity 100
+static 0
 
 # Projectile
 duration 5

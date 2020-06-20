@@ -5,4 +5,6 @@
 3 Data\Models\tower.txt
 4 Data\Models\bridge.txt
 5 Data\Models\level.txt
+6 Data\Models\sphere.txt
+7 Data\Models\bulb.txt
 -1 Data\Models\fw.txt

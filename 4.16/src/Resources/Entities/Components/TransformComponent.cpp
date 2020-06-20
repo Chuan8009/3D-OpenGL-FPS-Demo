@@ -4,18 +4,21 @@
 #include "../src/Resources/ResourceManager.h"
 
 #include "../src/Resources/Entities/Entity.h"
+#include "../src/Resources/Entities/Components/ProjectileComponent.h"
 #include "../src/Utility/Collision.h"
 
-TransformComponent::TransformComponent(std::shared_ptr<Entity> entity, glm::vec3 scale, glm::vec3 rotation, float speed) :
+TransformComponent::TransformComponent(std::shared_ptr<Entity> entity, glm::vec3 scale, glm::vec3 rotation, float speed, bool has_collision) :
 	Component		( entity ),
 	_transform		( glm::vec3(0.0, 0.0, 0.0), scale, rotation ),
-	_speed			( speed )
+	_speed			( speed ),
+	_has_collision	( has_collision )
 {}
 
 TransformComponent::TransformComponent(std::shared_ptr<Entity> new_entity, const TransformComponent& rhs) :
 	Component		( new_entity ),
 	_transform		( rhs._transform ),
-	_speed			( rhs._speed )
+	_speed			( rhs._speed ),
+	_has_collision	( rhs._has_collision )
 {}
 
 std::shared_ptr<Component> TransformComponent::copy(std::shared_ptr<Entity> new_entity) const {
@@ -26,6 +29,10 @@ void TransformComponent::update() {
 }
 
 bool TransformComponent::is_collision() {
+	if(!_has_collision) {
+		return false;
+	}
+
 	for(auto& mesh : Environment::get().get_resources()->get_model(_entity->get_model_id())->_meshes) {
 		Bounding_Box a = mesh._bounding_box;
 		a.min *= _transform.get_scale();
@@ -37,11 +44,13 @@ bool TransformComponent::is_collision() {
 		for (auto vec : cells) {
 			for (auto e : *vec) {
 				if (e.second != _entity && collision(a, e.first)) {
+					if(_entity->get<ProjectileComponent>()) {
+						_entity->destroy();
+					}
 					return true;
 				}
 			}
 		}
-
 	}
 
 	return false;
@@ -77,6 +86,10 @@ void TransformComponent::set(const glm::vec3 pos) {
 }
 
 void TransformComponent::update_grid(const glm::vec3 old_position) {
+	if(!_has_collision) {
+		return;
+	}
+
 	for (auto& mesh : Environment::get().get_resources()->get_model(_entity->get_model_id())->_meshes) {
 		Bounding_Box a = mesh._bounding_box;
 		a.min *= _transform.get_scale();

@@ -10,3 +10,6 @@
 3 Data\Entities\Objects\tower.txt
 4 Data\Entities\Objects\bridge.txt
 5 Data\Entities\Objects\level.txt
+6 Data\Entities\Objects\light.txt
+7 Data\Entities\Objects\bulb.txt
+8 Data\Entities\Objects\blue light.txt

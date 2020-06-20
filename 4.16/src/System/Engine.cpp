@@ -46,7 +46,11 @@ void Engine::run() {
 
 	auto level = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 5);
 	level->get<TransformComponent>()->set(glm::vec3(100, 0, 100));
+
+	make_lights();
+
 	Environment::get().get_resources()->build_entity_grid();
+
 
 	while (!_exit) {
 		_environment.get_clock()->update();
@@ -113,6 +117,7 @@ void Engine::input() {
 }
 
 void Engine::render() {
+	//static PointLight light(Environment::get().get_resources()->get_program(4), Transform(glm::vec3(100, 0, 100)));
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearBufferfv(GL_COLOR, 0, WINDOW_BACKGROUND_COLOR);
@@ -122,9 +127,10 @@ void Engine::render() {
 	//transform->_model->draw(transform->_transform); 
 	//Environment::get().get_resources()->get_model(_entity->get_model_id())->draw(transform->_transform);
 
+	//light.test();
 	_environment.get().get_resources()->render_entities();
 
-	debug_draw();
+	//debug_draw();
 
 	//Environment::get().get_resource_manager()->get_model(1)->draw();
 
@@ -139,12 +145,12 @@ void Engine::debug_draw() {
 	static Transform transform;
 
 	if (!draw) {
-		for (unsigned int i = 0; i < grid->_width; i += grid->_cell_width) {
+		for (int i = 0; i < grid->_width; i += grid->_cell_width) {
 			points.push_back(glm::vec3(i, .1, -(grid->_height / 2)));
 			points.push_back(glm::vec3(i, .1, (grid->_height / 2)));
 		}
 
-		for (unsigned int i = 0; i < grid->_height; i += grid->_cell_height) {
+		for (int i = 0; i < grid->_height; i += grid->_cell_height) {
 			points.push_back(glm::vec3(-(grid->_width / 2), .1, i));
 			points.push_back(glm::vec3((grid->_width / 2), .1, i));
 		}
@@ -156,4 +162,64 @@ void Engine::debug_draw() {
 	}
 
 	lines.draw_lines(Environment::get().get_resources()->get_program(2), transform);
+}
+
+void Engine::make_lights() {
+	auto light = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 6);
+	light->get<TransformComponent>()->set(glm::vec3(110, 5, 105));
+	Environment::get().get_resources()->get_light_buffer().add(light->get<LightComponent>());
+
+	auto light2 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 6);
+	light2->get<TransformComponent>()->set(glm::vec3(90, 5, 90));
+	Environment::get().get_resources()->get_light_buffer().add(light2->get<LightComponent>());
+
+	auto light3 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 6);
+	light3->get<TransformComponent>()->set(glm::vec3(50, 6, 72));
+	Environment::get().get_resources()->get_light_buffer().add(light3->get<LightComponent>());
+
+	auto light4 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 8);
+	light4->get<TransformComponent>()->set(glm::vec3(65, 5, 48));
+	Environment::get().get_resources()->get_light_buffer().add(light4->get<LightComponent>());
+
+	auto light5 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 8);
+	light5->get<TransformComponent>()->set(glm::vec3(65, 6, 115));
+	Environment::get().get_resources()->get_light_buffer().add(light5->get<LightComponent>());
+
+	auto light6 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 6);
+	light6->get<TransformComponent>()->set(glm::vec3(115, 5, 48));
+	Environment::get().get_resources()->get_light_buffer().add(light6->get<LightComponent>());
+
+	auto light7 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 8);
+	light7->get<TransformComponent>()->set(glm::vec3(140, 5, 60));
+	Environment::get().get_resources()->get_light_buffer().add(light7->get<LightComponent>());
+
+	auto light8 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 6);
+	light8->get<TransformComponent>()->set(glm::vec3(32, 5, 132));
+	Environment::get().get_resources()->get_light_buffer().add(light8->get<LightComponent>());
+
+	auto light9 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 6);
+	light9->get<TransformComponent>()->set(glm::vec3(121, 5, 134));
+	Environment::get().get_resources()->get_light_buffer().add(light9->get<LightComponent>());
+
+	auto light10 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 8);
+	light10->get<TransformComponent>()->set(glm::vec3(88, 5, 125));
+	Environment::get().get_resources()->get_light_buffer().add(light10->get<LightComponent>());
+
+	auto bulb = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 7);
+	bulb->get<TransformComponent>()->set(glm::vec3(70, 14, 100));
+	Environment::get().get_resources()->get_light_buffer().add(bulb->get<LightComponent>());
+
+	auto bulb2 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 7);
+	bulb2->get<TransformComponent>()->set(glm::vec3(80, 14, 100));
+	Environment::get().get_resources()->get_light_buffer().add(bulb2->get<LightComponent>());
+
+	auto bulb3 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 7);
+	bulb3->get<TransformComponent>()->set(glm::vec3(90, 14, 100));
+	Environment::get().get_resources()->get_light_buffer().add(bulb3->get<LightComponent>());
+
+	auto bulb4 = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 7);
+	bulb4->get<TransformComponent>()->set(glm::vec3(140, 40, 100));
+	Environment::get().get_resources()->get_light_buffer().add(bulb4->get<LightComponent>());
+
+	Environment::get().get_resources()->get_light_buffer().set_static_point();
 }

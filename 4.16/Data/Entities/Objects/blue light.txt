@@ -1,0 +1,14 @@
+- Blue Light
+
+# Entity
+model_id 1
+str_name Blue Light
+draw 0
+
+# Light
+program 4
+color 0.2 0.5 1
+intensity 40
+
+# Transform
+collidable 0

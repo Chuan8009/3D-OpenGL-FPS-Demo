@@ -15,6 +15,8 @@ public:
 	void draw(Transform& transform) const;
 
 	std::vector<Mesh> _meshes;
+
+	GLuint get_program();
 private:
 	size_t _id;
 	GLuint _program;

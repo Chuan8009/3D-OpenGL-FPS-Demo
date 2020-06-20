@@ -1,0 +1,14 @@
+- Bulb
+
+# Entity
+model_id 7
+str_name Bulb
+
+# Light
+program 4
+color 1 1 0.7
+intensity 20
+offset 0 -5 0
+
+# Transform
+collidable 1

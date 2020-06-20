@@ -1,4 +1,4 @@
 # Model
 dir Data\Models\level\
 file level.obj
-program_id 1
+program_id 4

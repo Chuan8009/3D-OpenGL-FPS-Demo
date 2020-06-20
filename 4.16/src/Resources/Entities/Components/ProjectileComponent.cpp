@@ -6,6 +6,7 @@
 ProjectileComponent::ProjectileComponent(std::shared_ptr<Entity> entity, const double duration) :
 	Component		( entity ),
 	_moving			( false ),
+	_dir			( glm::vec3(1, 1, 1) ),
 	_duration		( duration ),
 	_timer			( duration )
 {}

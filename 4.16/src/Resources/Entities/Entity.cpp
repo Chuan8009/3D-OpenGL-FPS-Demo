@@ -11,7 +11,8 @@ Entity::Entity() :
 	_unique_id  ( make_unique_id() ),
 	_id			( -1 ),
 	_model_id	( 0 ),
-	_destroy	( false )
+	_destroy	( false ),
+	_draw		( false )
 {}
 
 Entity::Entity(const std::string_view type, const int id) :
@@ -19,7 +20,8 @@ Entity::Entity(const std::string_view type, const int id) :
 	_type		( type ),
 	_id			( id ),
 	_model_id	( 0 ),
-	_destroy    ( false )
+	_destroy    ( false ),
+	_draw		( true )
 {
 	// ready to load
 }
@@ -30,7 +32,8 @@ Entity::Entity(const Entity& rhs) :
 	_id			( rhs._id ),
 	_model_id	( rhs._model_id ),
 	_name		( rhs._name ),
-	_destroy	( rhs._destroy )
+	_destroy	( rhs._destroy ),
+	_draw		( rhs._draw )
 {
 	// ready to copy
 }
@@ -96,6 +99,14 @@ void Entity::set_name(const std::string_view name) {
 	_name = name;
 }
 
+void Entity::set_draw(bool draw) {
+	_draw = draw;
+}
+
 bool Entity::get_destroy() {
 	return _destroy;
+}
+
+bool Entity::get_draw() {
+	return _draw;
 }

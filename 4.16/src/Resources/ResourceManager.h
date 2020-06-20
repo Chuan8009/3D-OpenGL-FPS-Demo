@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "../src/Utility/Grid.h"
+#include "../src/Resources/LightBuffer.h"
 
 struct Program;
 class Model;
@@ -36,6 +37,8 @@ public:
 	void build_entity_grid();
 	void add_to_grid(std::shared_ptr<Entity> entity);
 	void remove_from_grid(std::shared_ptr<Entity> entity);
+
+	LightBuffer& get_light_buffer();
 private:
 	std::map<size_t, GLuint> _programs;
 	std::map<size_t, std::shared_ptr<Model>> _models;
@@ -49,6 +52,8 @@ private:
 	std::shared_ptr<Entity> _player;
 
 	Grid<Entity> _entity_grid;
+
+	LightBuffer _lights;
 
 	bool _load_programs();
 	bool _load_program(const size_t id, const std::string_view path);
