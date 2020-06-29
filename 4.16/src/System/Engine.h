@@ -23,6 +23,7 @@ private:
 	bool _exit;
 
 	void make_lights();
+	void spawn_enemies();
 
 	Environment _environment;
 };

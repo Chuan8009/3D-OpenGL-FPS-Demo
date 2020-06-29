@@ -2,6 +2,8 @@
 
 #include "../src/Resources/Entities/Entity.h"
 #include "../src/Resources/Entities/Components/TransformComponent.h"
+#include "../src/Resources/Entities/Components/HostileComponent.h"
+#include "../src/Resources/Entities/Components/CombatComponent.h"
 
 ProjectileComponent::ProjectileComponent(std::shared_ptr<Entity> entity, const double duration) :
 	Component		( entity ),
@@ -32,6 +34,19 @@ void ProjectileComponent::update() {
 	if (_timer.update()) {
 		_entity->destroy();
 	}
+}
+
+void ProjectileComponent::on_collision(std::shared_ptr<Entity> entity) {
+	auto combat = _entity->get<CombatComponent>();
+	auto collided_combat = entity->get<CombatComponent>();
+
+	if (combat && collided_combat) {
+		if (_owner != entity) {
+			collided_combat->hit(combat);
+		}
+	}
+
+	_entity->destroy();
 }
 
 const int ProjectileComponent::get_type() const {

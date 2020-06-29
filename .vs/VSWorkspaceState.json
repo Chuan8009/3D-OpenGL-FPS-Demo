@@ -9,6 +9,6 @@
     "\\4.16\\src\\System",
     "\\4.16\\src\\Utility"
   ],
-  "SelectedNode": "\\4.16\\src\\Resources\\LightBuffer.cpp",
+  "SelectedNode": "\\4.16\\src\\Resources\\Entities\\Components\\TransformComponent.cpp",
   "PreviewInSolutionExplorer": false
 }

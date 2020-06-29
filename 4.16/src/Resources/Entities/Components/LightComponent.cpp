@@ -34,6 +34,10 @@ void LightComponent::update() {
 	}
 }
 
+void LightComponent::on_collision(std::shared_ptr<Entity> entity) {
+
+}
+
 const int LightComponent::get_type() const {
 	return LIGHT_COMPONENT;
 }

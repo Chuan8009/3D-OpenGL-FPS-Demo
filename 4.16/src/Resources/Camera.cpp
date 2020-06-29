@@ -126,6 +126,10 @@ glm::vec3 Camera::get_position() {
 	return _position;
 }
 
+Bounding_Box Camera::get_bounding_box() {
+	return _bounding_box;
+}
+
 bool Camera::is_collision() {
 	Bounding_Box a = _bounding_box;
 	a.min += _position;

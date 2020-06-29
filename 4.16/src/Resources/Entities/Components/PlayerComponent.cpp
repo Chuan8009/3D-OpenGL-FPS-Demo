@@ -12,22 +12,16 @@
 #include "ProjectileComponent.h"
 
 
-PlayerComponent::PlayerComponent(std::shared_ptr<Entity> entity, float fire_rate, float weight) :
+PlayerComponent::PlayerComponent(std::shared_ptr<Entity> entity, float fire_rate) :
 	Component			( entity ),
 	_fire_rate			( fire_rate ),
-	_fire_rate_timer	( fire_rate ),
-	_weight				( weight ),
-	_jumping			( false ),
-	_y_vel				( 0.0f )
+	_fire_rate_timer	( fire_rate )
 {}
 
 PlayerComponent::PlayerComponent(std::shared_ptr<Entity> new_entity, const PlayerComponent& rhs) :
 	Component			( new_entity ),
 	_fire_rate			( rhs._fire_rate ),
-	_fire_rate_timer	( rhs._fire_rate ),
-	_weight				( rhs._weight ),
-	_jumping			( rhs._jumping ),
-	_y_vel				( rhs._y_vel )
+	_fire_rate_timer	( rhs._fire_rate )
 {}
 
 std::shared_ptr<Component> PlayerComponent::copy(std::shared_ptr<Entity> new_entity) const {
@@ -35,28 +29,11 @@ std::shared_ptr<Component> PlayerComponent::copy(std::shared_ptr<Entity> new_ent
 }
 
 void PlayerComponent::update() {
-	auto new_position = Environment::get().get_window()->get_camera()->get_position();
-	auto old_position = new_position;
-	auto time = Environment::get().get_clock()->get_time();
-	new_position.y += _y_vel * (float)time;
-	_y_vel -= _weight * (float)time;
 
-	if (_y_vel < -40000) {
-		_y_vel = -40000;
-	}
+}
 
-	Environment::get().get_window()->get_camera()->set_position(new_position);
+void PlayerComponent::on_collision(std::shared_ptr<Entity> entity) {
 
-	if (Environment::get().get_window()->get_camera()->is_collision()) {
-		if (_y_vel > 0) {
-			_y_vel = 0;
-		}
-		else if (_y_vel < 0) {
-			_y_vel = 0;
-			_jumping = false;
-		}
-		Environment::get().get_window()->get_camera()->set_position(old_position);
-	}
 }
 
 const int PlayerComponent::get_type() const {
@@ -72,12 +49,23 @@ void PlayerComponent::fire() {
 		camera_position.z += .3f * camera_direction.z;
 		camera_position.x += .3f * camera_direction.x;
 		bullet->get<TransformComponent>()->set(camera_position);
+		bullet->get<ProjectileComponent>()->_owner = _entity;
 	}
 }
 
-void PlayerComponent::jump() {
-	if (!_jumping) {
-		_jumping = true;
-		_y_vel = 25000;
+std::shared_ptr<Entity> PlayerComponent::is_collision() {
+	Bounding_Box a = Environment::get().get_window()->get_camera()->get_bounding_box();
+	a.min += Environment::get().get_window()->get_camera()->get_position();
+	a.max += Environment::get().get_window()->get_camera()->get_position();
+
+	auto cells = Environment::get().get_resources()->get_entity_grid()->get_cells(a);
+	for (auto vec : cells) {
+		for (auto e : *vec) {
+			if (collision(a, e.first)) {
+				return e.second;
+			}
+		}
 	}
+
+	return nullptr;
 }

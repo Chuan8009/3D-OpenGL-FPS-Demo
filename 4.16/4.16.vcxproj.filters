@@ -111,6 +111,15 @@
     <ClCompile Include="src\Resources\LightBuffer.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\HostileComponent.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\WeightComponent.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Entities\Components\CombatComponent.cpp">
+      <Filter>Source Files\Resources\Entities\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\System\Engine.h">
@@ -184,6 +193,15 @@
     </ClInclude>
     <ClInclude Include="src\Resources\LightBuffer.h">
       <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\HostileComponent.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\WeightComponent.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Entities\Components\CombatComponent.h">
+      <Filter>Header Files\Resources\Entities\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

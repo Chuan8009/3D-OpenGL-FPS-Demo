@@ -47,12 +47,17 @@ std::shared_ptr<Entity> ResourceManager::get_entity_base(const std::string_view 
 	return _entities_base[type.data()][id];
 }
 
-std::shared_ptr<Entity> ResourceManager::new_entity(const std::string_view type, const size_t id) {
+std::shared_ptr<Entity> ResourceManager::new_entity(const std::string_view type, const size_t id, bool next_update) {
 	const auto entity = _entities_base[type.data()][id];
 	std::shared_ptr<Entity> new_entity = std::make_shared<Entity>(*entity);
 	new_entity->copy(*entity);
-	_entities.push_back(new_entity);
-	add_to_grid(new_entity);
+	if (!next_update) {
+		_entities.push_back(new_entity);
+		add_to_grid(new_entity);
+	}
+	else {
+		_entity_queue.push_back(new_entity);
+	}
 	return new_entity;
 }
 
@@ -180,6 +185,12 @@ void ResourceManager::update_entities() {
 			it = _entities.erase(it);
 		}
 	}
+
+	for(auto it = _entity_queue.begin(); it != _entity_queue.end(); ++it) {
+		_entities.push_back(*it);
+		add_to_grid(*it);
+	}
+	_entity_queue.clear();
 }
 
 void ResourceManager::render_entities() {
@@ -202,6 +213,8 @@ void ResourceManager::build_entity_grid() {
 			if (transform->_has_collision) {
 				for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
 					auto bounding_box = mesh._bounding_box;
+					bounding_box.min *= transform->_transform.get_scale();
+					bounding_box.max *= transform->_transform.get_scale();
 					bounding_box.min += transform->_transform.get_position();
 					bounding_box.max += transform->_transform.get_position();
 
@@ -217,6 +230,8 @@ void ResourceManager::add_to_grid(std::shared_ptr<Entity> entity) {
 		if (transform->_has_collision) {
 			for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
 				auto bounding_box = mesh._bounding_box;
+				bounding_box.min *= transform->_transform.get_scale();
+				bounding_box.max *= transform->_transform.get_scale();
 				bounding_box.min += transform->_transform.get_position();
 				bounding_box.max += transform->_transform.get_position();
 
@@ -230,6 +245,8 @@ void ResourceManager::remove_from_grid(std::shared_ptr<Entity> entity) {
 	if (auto transform = entity->get<TransformComponent>()) {
 		for (auto& mesh : _models[entity->get_model_id()]->_meshes) {
 			auto bounding_box = mesh._bounding_box;
+			bounding_box.min *= transform->_transform.get_scale();
+			bounding_box.max *= transform->_transform.get_scale();
 			bounding_box.min += transform->_transform.get_position();
 			bounding_box.max += transform->_transform.get_position();
 

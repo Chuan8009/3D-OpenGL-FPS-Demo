@@ -8,6 +8,9 @@
 #include "../src/Resources/Entities/Components/TransformComponent.h"
 #include "../src/Resources/Entities/Components/ProjectileComponent.h"
 #include "../src/Resources/Entities/Components/LightComponent.h"
+#include "../src/Resources/Entities/Components/HostileComponent.h"
+#include "../src/Resources/Entities/Components/WeightComponent.h"
+#include "../src/Resources/Entities/Components/CombatComponent.h"
 
 #include "../src/Utility/FileReader.h"
 
@@ -18,7 +21,6 @@
 
 #define PLAYER_SECTION "Player"
 #define PLAYER_FIRE_RATE "fire_rate"
-#define PLAYER_WEIGHT "weight"
 
 #define ENTITY_SECTION "Entity"
 #define ENTITY_MODEL_ID "model_id"
@@ -41,14 +43,22 @@
 #define LIGHT_OFFSET "offset"
 #define LIGHT_STATIC "static"
 
+#define HOSTILE_SECTION "Hostile"
+#define HOSTILE_FIRE_RATE "fire_rate"
+
+#define WEIGHT_SECTION "Weight"
+#define WEIGHT_WEIGHT "weight"
+
+#define COMBAT_SECTION "Combat"
+#define COMBAT_HEALTH "health"
+#define COMBAT_DAMAGE "damage"
+
 void load_player(FileReader& file, std::shared_ptr<Entity> entity, std::shared_ptr<PlayerComponent>& player) {
 	float fire_rate = 1.0f;
-	float weight = 0.01f;
 
 	file.read(&fire_rate, PLAYER_FIRE_RATE);
-	file.read(&weight, PLAYER_WEIGHT);
 
-	player = std::make_shared<PlayerComponent>(entity, fire_rate, weight);
+	player = std::make_shared<PlayerComponent>(entity, fire_rate);
 }
 
 void load_transform(FileReader& file, std::shared_ptr<Entity> entity, std::shared_ptr<TransformComponent> &transform) {
@@ -111,6 +121,32 @@ void load_light(FileReader& file, std::shared_ptr<Entity> entity, std::shared_pt
 	light = std::make_shared<LightComponent>(entity, program_id, color, intensity, static_position, offset);
 }
 
+void load_hostile(FileReader& file, std::shared_ptr<Entity> entity, std::shared_ptr<HostileComponent> &hostile) {
+	float fire_rate = 1;
+
+	file.read(&fire_rate, HOSTILE_FIRE_RATE);
+
+	hostile = std::make_shared<HostileComponent>(entity, fire_rate);
+}
+
+void load_weight(FileReader& file, std::shared_ptr<Entity> entity, std::shared_ptr<WeightComponent>& weight) {
+	float weight_val = 1.0f;
+
+	file.read(&weight_val, WEIGHT_WEIGHT);
+
+	weight = std::make_shared<WeightComponent>(entity, weight_val);
+}
+
+void load_combat(FileReader& file, std::shared_ptr<Entity> entity, std::shared_ptr<CombatComponent>& combat) {
+	int health = 100;
+	int damage = 25;
+
+	file.read(&health, COMBAT_HEALTH);
+	file.read(&damage, COMBAT_DAMAGE);
+
+	combat = std::make_shared<CombatComponent>(entity, health, damage);
+}
+
 bool load_components(std::shared_ptr<Entity> entity) {
 	FileReader file(ENTITIES_FILE, FileReader::int_val);
 
@@ -160,6 +196,24 @@ bool load_components(std::shared_ptr<Entity> entity) {
 		std::shared_ptr<LightComponent> light = nullptr;
 		load_light(entity_file, entity, light);
 		entity->add(light);
+	}
+
+	if(entity_file.set_section(HOSTILE_SECTION)) {
+		std::shared_ptr<HostileComponent> hostile = nullptr;
+		load_hostile(entity_file, entity, hostile);
+		entity->add(hostile);
+	}
+
+	if(entity_file.set_section(WEIGHT_SECTION)) {
+		std::shared_ptr<WeightComponent> weight = nullptr;
+		load_weight(entity_file, entity, weight);
+		entity->add(weight);
+	}
+	
+	if(entity_file.set_section(COMBAT_SECTION)) {
+		std::shared_ptr<CombatComponent> stat = nullptr;
+		load_combat(entity_file, entity, stat);
+		entity->add(stat);
 	}
 
 	return true;

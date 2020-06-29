@@ -16,6 +16,8 @@ public:
 
 	void update();
 
+	void on_collision(std::shared_ptr<Entity> entity);
+
 	const int get_type() const;
 
 	static constexpr int _type = LIGHT_COMPONENT;

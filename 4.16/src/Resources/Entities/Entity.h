@@ -10,6 +10,7 @@
 
 constexpr const char* ENTITY_PLAYER = "Player";
 constexpr const char* ENTITY_OBJECT = "Object";
+constexpr const char* ENTITY_ENEMY = "Enemy";
 
 class Entity : public std::enable_shared_from_this<Entity> {
 public:
@@ -32,6 +33,8 @@ public:
 	void copy(const Entity& rhs);
 
 	void destroy();
+
+	std::shared_ptr<Entity> is_collision();
 
 	unsigned int get_unique_id();
 	int get_id();

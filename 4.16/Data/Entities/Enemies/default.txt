@@ -1,0 +1,19 @@
+- Default
+
+# Entity
+model_id 0
+str_name Enemy
+
+# Weight
+weight 30000000
+
+# Transform
+speed 0.01
+scale 0.05 0.05 0.05
+
+# Combat
+health 100
+damage 50
+
+# Hostile
+fire_rate 1

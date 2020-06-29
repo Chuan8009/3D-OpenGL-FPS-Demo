@@ -13,3 +13,6 @@
 6 Data\Entities\Objects\light.txt
 7 Data\Entities\Objects\bulb.txt
 8 Data\Entities\Objects\blue light.txt
+
+# Enemy
+0 Data\Entities\Enemies\default.txt

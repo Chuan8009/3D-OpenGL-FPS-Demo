@@ -5,7 +5,8 @@ model_id 6
 str_name Bullet
 
 # Transform
-speed 1
+speed 0.2
+scale 10 10 10
 
 # Light
 program 4
@@ -15,3 +16,7 @@ static 0
 
 # Projectile
 duration 5
+
+# Combat
+health 0
+damage 25

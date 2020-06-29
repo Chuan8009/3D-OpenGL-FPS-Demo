@@ -24,7 +24,7 @@ public:
 	GLuint get_program(const size_t id);
 	std::shared_ptr<Model> get_model(const size_t id);
 	std::shared_ptr<Entity> get_entity_base(const std::string_view type, const size_t id);
-	std::shared_ptr<Entity> new_entity(const std::string_view type, const size_t id);
+	std::shared_ptr<Entity> new_entity(const std::string_view type, const size_t id, bool next_update = false);
 
 	void load_resources();
 
@@ -45,6 +45,7 @@ private:
 
 	//std::map<std::string, std::map<size_t, std::shared_ptr<Entity>>> _entities;
 	std::vector<std::shared_ptr<Entity>> _entities;
+	std::vector<std::shared_ptr<Entity>> _entity_queue;
 
 	// entity map to copy entites from instead of loading directly
 	std::map<std::string, std::map<size_t, std::shared_ptr<Entity>>> _entities_base;

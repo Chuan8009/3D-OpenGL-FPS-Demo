@@ -7,3 +7,5 @@
 5 Data\Models\level.txt
 6 Data\Models\sphere.txt
 7 Data\Models\bulb.txt
+8 Data\Models\goron.txt
+9 Data\Models\ganon.txt

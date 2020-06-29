@@ -1,4 +1,4 @@
 # Model
-dir Data\Models\
+dir Data\Models\link\
 file link.obj
-program_id 0
+program_id 4

@@ -39,6 +39,7 @@ public:
 
 	glm::vec3 get_direction();
 	glm::vec3 get_position();
+	Bounding_Box get_bounding_box();
 
 	void set_position(glm::vec3 position);
 

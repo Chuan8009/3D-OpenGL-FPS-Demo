@@ -1,0 +1,4 @@
+# Model
+dir Data\Models\Goron\
+file Goron.obj
+program_id 4

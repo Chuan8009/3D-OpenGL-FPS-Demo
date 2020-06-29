@@ -11,6 +11,7 @@
 #include "../src/Resources/Entities/Components/PlayerComponent.h"
 #include "../src/Resources/Entities/Components/TransformComponent.h"
 #include "../src/Resources/Entities/Components/ProjectileComponent.h"
+#include "../src/Resources/Entities/Components/WeightComponent.h"
 
 Engine::Engine() :
 	_exit			 ( false )
@@ -47,6 +48,9 @@ void Engine::run() {
 	auto level = Environment::get().get_resources()->new_entity(ENTITY_OBJECT, 5);
 	level->get<TransformComponent>()->set(glm::vec3(100, 0, 100));
 
+	auto enemy = Environment::get().get_resources()->new_entity(ENTITY_ENEMY, 0);
+	enemy->get<TransformComponent>()->set(glm::vec3(100, 200, 100));
+
 	make_lights();
 
 	Environment::get().get_resources()->build_entity_grid();
@@ -60,6 +64,7 @@ void Engine::run() {
 
 		input();
 
+		spawn_enemies();
 		_environment.get_resources()->update_entities();
 	}
 	
@@ -111,7 +116,7 @@ void Engine::input() {
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_SPACE)) {
-		_environment.get().get_resources()->get_player()->get<PlayerComponent>()->jump();
+		_environment.get().get_resources()->get_player()->get<WeightComponent>()->jump();
 	}
 	
 }
@@ -222,4 +227,14 @@ void Engine::make_lights() {
 	Environment::get().get_resources()->get_light_buffer().add(bulb4->get<LightComponent>());
 
 	Environment::get().get_resources()->get_light_buffer().set_static_point();
+}
+
+void Engine::spawn_enemies() {
+	static Timer spawn_timer(5);
+
+	if(spawn_timer.update()) {
+		auto enemy = _environment.get().get_resources()->new_entity(ENTITY_ENEMY, 0);
+		glm::vec3 position(((rand() % 50) + 70), 50, ((rand() % 70) + 50));
+		enemy->get<TransformComponent>()->set(position);
+	}
 }

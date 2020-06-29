@@ -21,10 +21,13 @@
   <ItemGroup>
     <ClCompile Include="src\Resources\Camera.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\ComponentLoader.cpp" />
+    <ClCompile Include="src\Resources\Entities\Components\HostileComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\LightComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\PlayerComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\ProjectileComponent.cpp" />
+    <ClCompile Include="src\Resources\Entities\Components\CombatComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\Resources\Entities\Components\WeightComponent.cpp" />
     <ClCompile Include="src\Resources\Entities\Entity.cpp" />
     <ClCompile Include="src\Resources\LightBuffer.cpp" />
     <ClCompile Include="src\Resources\Mesh.cpp" />
@@ -46,10 +49,13 @@
     <ClInclude Include="src\Resources\Camera.h" />
     <ClInclude Include="src\Resources\Entities\Components\Component.h" />
     <ClInclude Include="src\Resources\Entities\Components\ComponentLoader.h" />
+    <ClInclude Include="src\Resources\Entities\Components\HostileComponent.h" />
     <ClInclude Include="src\Resources\Entities\Components\LightComponent.h" />
     <ClInclude Include="src\Resources\Entities\Components\PlayerComponent.h" />
     <ClInclude Include="src\Resources\Entities\Components\ProjectileComponent.h" />
+    <ClInclude Include="src\Resources\Entities\Components\CombatComponent.h" />
     <ClInclude Include="src\Resources\Entities\Components\TransformComponent.h" />
+    <ClInclude Include="src\Resources\Entities\Components\WeightComponent.h" />
     <ClInclude Include="src\Resources\Entities\Entity.h" />
     <ClInclude Include="src\Resources\LightBuffer.h" />
     <ClInclude Include="src\Resources\Mesh.h" />

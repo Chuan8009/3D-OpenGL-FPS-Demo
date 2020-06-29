@@ -2,6 +2,9 @@
 
 #include "Components/ComponentLoader.h"
 
+#include "Components/PlayerComponent.h"
+#include "Components/TransformComponent.h"
+
 unsigned int make_unique_id() {
 	static unsigned int id = 0;
 	return id++;
@@ -65,6 +68,34 @@ void Entity::copy(const Entity& rhs) {
 			_components[i] = rhs._components[i]->copy(shared_from_this());
 		}
 	}
+}
+
+std::shared_ptr<Entity> Entity::is_collision() {
+	std::shared_ptr<Entity> collided_entity = nullptr;
+	if(_type == ENTITY_PLAYER) {
+		collided_entity = get<PlayerComponent>()->is_collision();
+	}
+	else if(_type == ENTITY_OBJECT) {
+		collided_entity = get<TransformComponent>()->is_collision();
+	}
+	else if(_type == ENTITY_ENEMY) {
+		collided_entity = get<TransformComponent>()->is_collision();
+	}
+
+	if(collided_entity) {
+		for (auto c : _components) {
+			if (c) {
+				c->on_collision(collided_entity);
+			}
+		}
+		for (auto c : collided_entity->_components) {
+			if(c) {
+				c->on_collision(shared_from_this());
+			}
+		}
+	}
+
+	return collided_entity;
 }
 
 void Entity::destroy() {
