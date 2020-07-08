@@ -15,7 +15,7 @@ intensity 100
 static 0
 
 # Projectile
-duration 5
+duration 1
 
 # Combat
 health 0
